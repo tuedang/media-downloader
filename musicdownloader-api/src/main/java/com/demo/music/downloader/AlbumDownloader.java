@@ -22,7 +22,6 @@ public class AlbumDownloader{
 		this.album = album;
 		this.targetOutputStreamContext = targetContext;
 	}
-//	private HttpDownloader httpDownloader = new StreamHttpDownloader();
 	private HttpDownloader httpDownloader = new SimpleHttpDownloader();
 	
 	public void downloadAlbum(DownloadCallback downloadCallback) throws IllegalStateException, IOException{
@@ -38,7 +37,7 @@ public class AlbumDownloader{
 		downloadCallback.updateStatus(status);
 		
 		String imageFileName = artistName+ getExt(album.getImageLink(), "jpg");
-		if(!targetOutputStreamContext.existed(imageFileName)) {
+		if(org.apache.commons.lang.StringUtils.isNotEmpty(album.getImageLink()) && !targetOutputStreamContext.existed(imageFileName)) {
 			OutputStream imgOs = targetOutputStreamContext.createOutputStream(imageFileName);
 			httpDownloader.download(album.getImageLink(), imgOs);
 			imgOs.close();

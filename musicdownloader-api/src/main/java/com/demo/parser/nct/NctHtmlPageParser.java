@@ -67,7 +67,7 @@ public class NctHtmlPageParser {
 	 * @return String
 	 */
 	public String parseAlbumName() {
-		HtmlDivision div = (HtmlDivision) htmlPage.getByXPath("//div[@class='songname']").get(0);
+		HtmlDivision div = (HtmlDivision) htmlPage.getByXPath("//div[@class='name_title']").get(0);
 		DomNode domNode= div.getFirstChild();
 		return domNode.asText();
 	}
@@ -76,7 +76,7 @@ public class NctHtmlPageParser {
 	 * @return String
 	 */
 	public String parseArtist() {
-		HtmlDivision div = (HtmlDivision) htmlPage.getByXPath("//div[@class='songname']").get(0);
+		HtmlDivision div = (HtmlDivision) htmlPage.getByXPath("//div[@class='name_title']").get(0);
 		DomNode h2= div.getLastChild();
 		DomNode domNode= h2.getFirstChild();
 		return domNode.asText();

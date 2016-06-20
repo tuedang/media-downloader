@@ -7,9 +7,6 @@ import java.io.OutputStream;
 
 import org.apache.commons.io.FilenameUtils;
 
-import com.demo.music.downloader.dropbox.DropboxContext;
-import com.demo.music.downloader.dropbox.DropboxOutputStream;
-
 public class TargetOutputStreamContext {
 
 	public enum TargetType {
@@ -33,7 +30,7 @@ public class TargetOutputStreamContext {
 			File albumFolder = new File(basePath, fileName);
 			return new FileOutputStream(albumFolder);
 		} else {
-			return new DropboxOutputStream(FilenameUtils.concat(basePath, fileName));
+			throw new IOException("Not support yet");
 		}
 	}
 	
@@ -54,11 +51,8 @@ public class TargetOutputStreamContext {
 		if (targetType == TargetType.FILE_SYSTEM) {
 			File albumFolder = new File(basePath, fileName);
 			return albumFolder.exists();
-		} else {
-			String path = FilenameUtils.concat(basePath, fileName);
-			System.out.println("CHECK="+path);
-			return DropboxContext.existed(path);
 		}
+		return false;
 	}
 
 	public TargetType getTargetType() {

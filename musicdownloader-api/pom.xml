@@ -74,17 +74,7 @@
             <groupId>org.apache.httpcomponents</groupId>
             <artifactId>httpmime</artifactId>
             <version>4.2.1</version>
-        </dependency> 
-	    <dependency>
-	      <groupId>com.google.api-client</groupId>
-	      <artifactId>google-api-client</artifactId>
-	      <version>1.13.2-beta</version>
-	    </dependency>
-		<dependency>
-			<groupId>org.syncloud</groupId>
-			<artifactId>dropbox-client</artifactId>
-			<version>1.5.3</version>
-		</dependency>
+        </dependency>
 </dependencies>
 
 	<build>
