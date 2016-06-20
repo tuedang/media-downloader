@@ -1,0 +1,107 @@
+<Shell xmlns="http://www.eclipse.org/xwt/presentation" 
+	xmlns:x="http://www.eclipse.org/xwt" x:Class="com.demo.music.bootstrap.MainWindow">
+	<Shell.layout>
+		<GridLayout numColumns="1" makeColumnsEqualWidth="true" />
+	</Shell.layout>
+	<Shell.text>Music downloader</Shell.text>
+	<Shell.display>
+		<Font>
+			<Font.FontData name="Microsoft Sans Serif" height="11" x:style="NORMAL" />
+		</Font>
+	</Shell.display>
+
+	 <Composite xmlns="http://www.eclipse.org/xwt/presentation"  x:style="EMBEDDED">
+	   <Composite.layout>
+	       <GridLayout numColumns="8" makeColumnsEqualWidth="true"/>
+	   </Composite.layout>
+	   <Composite.layoutData>
+	       <GridData grabExcessHorizontalSpace="true" horizontalAlignment="FILL"  horizontalSpan="6"/>
+	   </Composite.layoutData>
+	   
+	   <Label text="Link web:" x:style="NONE"/>
+	   <Text name="webLinkId" x:style="BORDER" text="http://www.nhaccuatui.com/nghe?L=QN683n2adKYZ">
+	      <Text.layoutData>
+	         <GridData grabExcessHorizontalSpace="true" horizontalAlignment="FILL"  horizontalSpan="6"/>
+	      </Text.layoutData>
+	   </Text>
+	   <Button name="discographyId" x:style="CHECK" text="Discography" enabled="false"></Button>
+	</Composite>
+	
+	 <Composite x:style="EMBEDDED">
+	   <Composite.layout>
+	       <GridLayout numColumns="8" makeColumnsEqualWidth="true"/>
+	   </Composite.layout>
+	   <Composite.layoutData>
+	       <GridData grabExcessHorizontalSpace="true" horizontalAlignment="FILL"  horizontalSpan="6"/>
+	   </Composite.layoutData>
+	   
+	   <Label text="Directory:" x:style="NONE"/>
+	   <Text name="destDirectoryId" x:style="BORDER">
+	      <Text.layoutData>
+	         <GridData grabExcessHorizontalSpace="true" horizontalAlignment="FILL"  horizontalSpan="6"/>
+	      </Text.layoutData>
+	   </Text>
+	   <Button x:style="PUSH" text="Browse..." SelectionEvent="widgetSelected"></Button>
+	</Composite>
+	
+	 <Composite x:style="EMBEDDED">
+	   <Composite.layout>
+	       <GridLayout numColumns="8" makeColumnsEqualWidth="true"/>
+	   </Composite.layout>
+	   <Composite.layoutData>
+	       <GridData grabExcessHorizontalSpace="true" horizontalAlignment="FILL"  horizontalSpan="6"/>
+	   </Composite.layoutData>
+	   <Text name="consoleId" x:style="MULTI | BORDER | V_SCROLL| H_SCROLL" editable="false">
+	   		<Text.text>
+	   			<![CDATA[
+	   			Music Downloader v2.2
+	   			
+Xin bấm like để sử dụng tất cả những tính năng. 
+Chương trình hỗ trợ:
+		-Download một danh sách nhạc từ Nhaccuatui
+		-Download một danh sách nhạc từ Zing
+		-Tạo playlist nhạc sau khi download
+		-Cập nhập lại thông tin file nhạc giúp thuận tiện khi
+			Add vào window media player, VLC, itunes
+			Sync qua IOS/Adroid
+			Hỗ trợ đầy đủ tiếng việt (khi nghe nhạc và khi xem trong explorer
+			Lưu trữ đúng thứ tự track trong album
+		-Download bộ sưu tập (discography-hỗ trợ bên NCT)
+
+-
+		
+	   			]]>
+	   		</Text.text>
+	      <Text.layoutData>
+	         <GridData grabExcessHorizontalSpace="true" horizontalAlignment="FILL"  horizontalSpan="5" widthHint="80" heightHint="555"/>
+	      </Text.layoutData>
+	   </Text>
+	   <Browser name="browserId">
+	   	<Browser.url>
+	   		<![CDATA[
+	   		http://www.facebook.com/plugins/likebox.php?href=http%3A%2F%2Fwww.facebook.com%2Fmediadownloader&height=555&show_faces=true&colorscheme=light&stream=true&border_color&header=true&appId=457114007670546]]>
+	   	</Browser.url>
+	      <Browser.layoutData>
+	         <GridData grabExcessHorizontalSpace="true" horizontalAlignment="FILL"  horizontalSpan="3" widthHint="80" heightHint="555"/>
+	      </Browser.layoutData>
+	   </Browser>
+	</Composite>
+	
+	 <Composite x:style="EMBEDDED">
+	   <Composite.layout>
+	       <GridLayout numColumns="8" makeColumnsEqualWidth="true"/>
+	   </Composite.layout>
+	   <Composite.layoutData>
+	       <GridData grabExcessHorizontalSpace="true" horizontalAlignment="FILL"  horizontalSpan="6"/>
+	   </Composite.layoutData>
+	   
+	   <Label text="Progress:" x:style="NONE"/>
+	   <ProgressBar name="progressBarId" x:style="BORDER">
+	      <ProgressBar.layoutData>
+	         <GridData grabExcessHorizontalSpace="true" horizontalAlignment="FILL"  horizontalSpan="4"/>
+	      </ProgressBar.layoutData>
+	   </ProgressBar>
+	   <Button x:style="PUSH" text="CreateAlbum..." SelectionEvent="createAlbumEvent"></Button>
+	</Composite>
+
+</Shell>

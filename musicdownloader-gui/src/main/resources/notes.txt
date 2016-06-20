@@ -1,0 +1,10 @@
+-XstartOnFirstThread
+
+<key>StartOnMainThread</key>
+<string>true</string>
+
+
+build lauch4j:
+http://stackoverflow.com/questions/11517317/how-to-add-a-directory-first-on-the-classpath-using-launch4j-and-maven
+http://www.jayway.com/2011/08/15/create-native-java-applications-on-os-x-and-windows-using-maven-plugins/
+https://open-delta.googlecode.com/svn-history/r2033/trunk/dist/pom.xml

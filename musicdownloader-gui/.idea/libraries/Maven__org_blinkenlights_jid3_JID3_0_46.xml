@@ -1,0 +1,13 @@
+<component name="libraryTable">
+  <library name="Maven: org.blinkenlights.jid3:JID3:0.46">
+    <CLASSES>
+      <root url="jar://$MAVEN_REPOSITORY$/org/blinkenlights/jid3/JID3/0.46/JID3-0.46.jar!/" />
+    </CLASSES>
+    <JAVADOC>
+      <root url="jar://$MAVEN_REPOSITORY$/org/blinkenlights/jid3/JID3/0.46/JID3-0.46-javadoc.jar!/" />
+    </JAVADOC>
+    <SOURCES>
+      <root url="jar://$MAVEN_REPOSITORY$/org/blinkenlights/jid3/JID3/0.46/JID3-0.46-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>
