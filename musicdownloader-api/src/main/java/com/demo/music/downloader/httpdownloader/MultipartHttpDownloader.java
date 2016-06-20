@@ -26,10 +26,10 @@ import com.demo.common.FileUtils;
 import com.demo.music.downloader.HttpDownloader;
 
 public class MultipartHttpDownloader implements HttpDownloader{
-	@Override
-	public void download(String url, OutputStream out) throws IOException {
-	}
-	
+    @Override
+    public void download(String url, OutputStream out) throws IOException {
+    }
+
     private int getFileSize(URL url) {
         HttpURLConnection conn = null;
         try {
@@ -45,119 +45,119 @@ public class MultipartHttpDownloader implements HttpDownloader{
     }
     
     public void downloadMultipart(String url, File target, int retry) throws IllegalStateException, IOException {
-		for(int i=0; i<retry; i++) {
-			try{
-				downloadMultipart(url, target);
-				break;
-			}catch (Exception ex) {
-				System.out.println("Download failed"+ex.getMessage());
-			}
-		}
+        for(int i=0; i<retry; i++) {
+            try{
+                downloadMultipart(url, target);
+                break;
+            }catch (Exception ex) {
+                System.out.println("Download failed"+ex.getMessage());
+            }
+        }
     }
-	public void downloadMultipart(String url, File target) throws IllegalStateException, IOException, InterruptedException, ExecutionException {
-		if(url==null || url.isEmpty()) {
-			return;
-		}
-		System.out.println("target="+target.getAbsolutePath());
-		
-		URL mURL = new URL(url);
-		int totalContentLength = getFileSize(mURL);
-		int buffer_size=calculateBufferSize(totalContentLength);
-		int totalPart = (totalContentLength/buffer_size)+1;
-		
-		String fileName = FilenameUtils.getName(url);
-		String fsize = FileUtils.byteCountToDisplaySize(totalContentLength);
-		System.out.println(String.format("Downloading: %s in %s parts (%s)", fileName, totalPart, fsize));
-		
-		final HttpPart[] httpParts = new HttpPart[totalPart];
-		for(int i=0; i<totalPart; i++) {
-			HttpPart httpPart = new HttpPart(mURL, buffer_size * i, Math.min(buffer_size * (i + 1) -1, totalContentLength), totalContentLength);
-			httpParts[i] = httpPart;
-		}
-		
-		ByteArrayOutputStream[] finalResults = downloadParts(httpParts);
-		
-		FileOutputStream fout = new FileOutputStream(target);
-		for (ByteArrayOutputStream r : finalResults) {
-			r.writeTo(fout);
-		}
-		
-		fout.flush();
-		fout.close();
-			
-		System.out.println("Downloaded: "+fileName);
-		
-	}
-	private ByteArrayOutputStream[] downloadParts(final HttpPart[] httpParts) throws InterruptedException {
-		int partSize = httpParts.length;
-		
-		List<Callable<ByteArrayOutputStream>> tasks = new ArrayList<Callable<ByteArrayOutputStream>>();
-		for (HttpPart httpPart : httpParts) {
-			tasks.add(prepareDownloadPart(httpPart));
-		}
-		
-		ThreadPoolExecutor es=(ThreadPoolExecutor)Executors.newFixedThreadPool(4);
-		Map<Callable<ByteArrayOutputStream>, Future<ByteArrayOutputStream>> callingTasks = new LinkedHashMap<Callable<ByteArrayOutputStream>, Future<ByteArrayOutputStream>>();
-		for(Callable<ByteArrayOutputStream> task: tasks) {
-			callingTasks.put(task, es.submit(task));
-		}
-		
-		ByteArrayOutputStream[] finalResults = new ByteArrayOutputStream[partSize];
-		System.out.print(String.format("Completed part(total=%s):", partSize));
-		while(es.getCompletedTaskCount() < es.getTaskCount()) {
-			es.awaitTermination(2, TimeUnit.SECONDS);
-			
-			List<Callable<ByteArrayOutputStream>> callableKeys = new ArrayList<Callable<ByteArrayOutputStream>>(callingTasks.keySet());
-			for (int i = 0; i < callableKeys.size(); i++) {
-				Callable<ByteArrayOutputStream> task = callableKeys.get(i);
-				Future<ByteArrayOutputStream> f = callingTasks.get(task);
-				if (f.isDone()&& finalResults[i]==null) {
-					try{
-						finalResults[i] = f.get();
-					}catch(Exception e) {
-						System.out.println("download error at part="+i +"=>"+e.getMessage()+" RESTARTING....");
-						callingTasks.put(task, es.submit(task));
-					}
-					
-					System.out.print(String.format("(%s) ", i+1));
-				}
-			}
-			
-		}
-		System.out.println("");
-		return finalResults;
-	}
-	
-	private Callable<ByteArrayOutputStream> prepareDownloadPart(final HttpPart httpPart) throws InterruptedException {
-		Callable<ByteArrayOutputStream> task= new Callable<ByteArrayOutputStream>() {
-			@Override
-			public ByteArrayOutputStream call() throws Exception {
-				int bufferSize = httpPart.getToByte()-httpPart.getFromByte();
-				String byteRange = httpPart.getFromByte() + "-" + httpPart.getToByte();
-				ByteArrayOutputStream bo = new ByteArrayOutputStream(bufferSize);
-				HttpURLConnection conn = (HttpURLConnection)httpPart.getUrl().openConnection();
-				conn.setRequestProperty("Range", "bytes=" + byteRange);
-				InputStream inputStream = conn.getInputStream();
-				IOUtils.copy(inputStream, bo);
-				conn.disconnect();
-				return bo;
-			}
-		};
-		return task;
-		
-	}
-	
-	private int calculateBufferSize(int totalContentLength) {
+    public void downloadMultipart(String url, File target) throws IllegalStateException, IOException, InterruptedException, ExecutionException {
+        if(url==null || url.isEmpty()) {
+            return;
+        }
+        System.out.println("target="+target.getAbsolutePath());
 
-		int buff=1024*1000*2; //2MB 1 part
-		if(totalContentLength>7*FileUtils.ONE_MB) {
-			buff=1024*1000*3;
-		} else if(totalContentLength>20*FileUtils.ONE_MB) {
-			buff=1024*1000*5;
-		}else if(totalContentLength>40*FileUtils.ONE_MB) {
-			buff=1024*1000*8;
-		}
-		return buff;
-	}
+        URL mURL = new URL(url);
+        int totalContentLength = getFileSize(mURL);
+        int buffer_size=calculateBufferSize(totalContentLength);
+        int totalPart = (totalContentLength/buffer_size)+1;
+
+        String fileName = FilenameUtils.getName(url);
+        String fsize = FileUtils.byteCountToDisplaySize(totalContentLength);
+        System.out.println(String.format("Downloading: %s in %s parts (%s)", fileName, totalPart, fsize));
+
+        final HttpPart[] httpParts = new HttpPart[totalPart];
+        for(int i=0; i<totalPart; i++) {
+            HttpPart httpPart = new HttpPart(mURL, buffer_size * i, Math.min(buffer_size * (i + 1) -1, totalContentLength), totalContentLength);
+            httpParts[i] = httpPart;
+        }
+
+        ByteArrayOutputStream[] finalResults = downloadParts(httpParts);
+
+        FileOutputStream fout = new FileOutputStream(target);
+        for (ByteArrayOutputStream r : finalResults) {
+            r.writeTo(fout);
+        }
+
+        fout.flush();
+        fout.close();
+
+        System.out.println("Downloaded: "+fileName);
+
+    }
+    private ByteArrayOutputStream[] downloadParts(final HttpPart[] httpParts) throws InterruptedException {
+        int partSize = httpParts.length;
+
+        List<Callable<ByteArrayOutputStream>> tasks = new ArrayList<Callable<ByteArrayOutputStream>>();
+        for (HttpPart httpPart : httpParts) {
+            tasks.add(prepareDownloadPart(httpPart));
+        }
+
+        ThreadPoolExecutor es=(ThreadPoolExecutor)Executors.newFixedThreadPool(4);
+        Map<Callable<ByteArrayOutputStream>, Future<ByteArrayOutputStream>> callingTasks = new LinkedHashMap<Callable<ByteArrayOutputStream>, Future<ByteArrayOutputStream>>();
+        for(Callable<ByteArrayOutputStream> task: tasks) {
+            callingTasks.put(task, es.submit(task));
+        }
+
+        ByteArrayOutputStream[] finalResults = new ByteArrayOutputStream[partSize];
+        System.out.print(String.format("Completed part(total=%s):", partSize));
+        while(es.getCompletedTaskCount() < es.getTaskCount()) {
+            es.awaitTermination(2, TimeUnit.SECONDS);
+
+            List<Callable<ByteArrayOutputStream>> callableKeys = new ArrayList<Callable<ByteArrayOutputStream>>(callingTasks.keySet());
+            for (int i = 0; i < callableKeys.size(); i++) {
+                Callable<ByteArrayOutputStream> task = callableKeys.get(i);
+                Future<ByteArrayOutputStream> f = callingTasks.get(task);
+                if (f.isDone()&& finalResults[i]==null) {
+                    try{
+                        finalResults[i] = f.get();
+                    }catch(Exception e) {
+                        System.out.println("download error at part="+i +"=>"+e.getMessage()+" RESTARTING....");
+                        callingTasks.put(task, es.submit(task));
+                    }
+
+                    System.out.print(String.format("(%s) ", i+1));
+                }
+            }
+
+        }
+        System.out.println("");
+        return finalResults;
+    }
+
+    private Callable<ByteArrayOutputStream> prepareDownloadPart(final HttpPart httpPart) throws InterruptedException {
+        Callable<ByteArrayOutputStream> task= new Callable<ByteArrayOutputStream>() {
+            @Override
+            public ByteArrayOutputStream call() throws Exception {
+                int bufferSize = httpPart.getToByte()-httpPart.getFromByte();
+                String byteRange = httpPart.getFromByte() + "-" + httpPart.getToByte();
+                ByteArrayOutputStream bo = new ByteArrayOutputStream(bufferSize);
+                HttpURLConnection conn = (HttpURLConnection)httpPart.getUrl().openConnection();
+                conn.setRequestProperty("Range", "bytes=" + byteRange);
+                InputStream inputStream = conn.getInputStream();
+                IOUtils.copy(inputStream, bo);
+                conn.disconnect();
+                return bo;
+            }
+        };
+        return task;
+
+    }
+
+    private int calculateBufferSize(int totalContentLength) {
+
+        int buff=1024*1000*2; //2MB 1 part
+        if(totalContentLength>7*FileUtils.ONE_MB) {
+            buff=1024*1000*3;
+        } else if(totalContentLength>20*FileUtils.ONE_MB) {
+            buff=1024*1000*5;
+        }else if(totalContentLength>40*FileUtils.ONE_MB) {
+            buff=1024*1000*8;
+        }
+        return buff;
+    }
 
 }

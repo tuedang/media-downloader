@@ -1,15 +1,15 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-	<parent>
-		<groupId>com.mediadownloader</groupId>
-		<artifactId>mediadownloader-parent</artifactId>
-		<version>2.2.0</version>
-	</parent>
+    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <parent>
+        <groupId>com.mediadownloader</groupId>
+        <artifactId>mediadownloader-parent</artifactId>
+        <version>2.2.0</version>
+    </parent>
 
-	<modelVersion>4.0.0</modelVersion>
-	<groupId>com.mediadownloader</groupId>
-	<artifactId>musicdownloader-api</artifactId>
-	<version>2.2.0</version>
+    <modelVersion>4.0.0</modelVersion>
+    <groupId>com.mediadownloader</groupId>
+    <artifactId>musicdownloader-api</artifactId>
+    <version>2.2.0</version>
 
     <pluginRepositories>
         <pluginRepository>
@@ -22,7 +22,7 @@
         </pluginRepository>
     </pluginRepositories>
     
-	<repositories>
+    <repositories>
         <repository>
           <snapshots><enabled>false</enabled></snapshots>
           <id>ibiblio</id>
@@ -36,48 +36,53 @@
           <url>http://mirrors.ibiblio.org/pub/mirrors/maven2/</url>
         </repository>
         <repository>
-        	<id>nexus</id>
-        	<url>https://oss.sonatype.org/content/groups/public/</url>
+            <id>nexus</id>
+            <url>https://oss.sonatype.org/content/groups/public/</url>
         </repository>
-	</repositories>
-	
+    </repositories>
+
 <properties>
-	<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 </properties>
 
 <dependencies>
-	<dependency>
-		<groupId>org.testng</groupId>
-		<artifactId>testng</artifactId>
-		<version>6.7</version>
-		<scope>provided</scope>
-	</dependency>
+    <dependency>
+        <groupId>org.testng</groupId>
+        <artifactId>testng</artifactId>
+        <version>6.7</version>
+        <scope>provided</scope>
+    </dependency>
 
-	<dependency>
-		<groupId>net.sourceforge.htmlunit</groupId>
-		<artifactId>htmlunit</artifactId>
-		<version>2.22</version>
-	</dependency>
-	<dependency>
-		<groupId>org.blinkenlights.jid3</groupId>
-		<artifactId>JID3</artifactId>
-		<version>0.46</version>
-	</dependency>
+    <dependency>
+        <groupId>net.sourceforge.htmlunit</groupId>
+        <artifactId>htmlunit</artifactId>
+        <version>2.22</version>
+    </dependency>
+    <dependency>
+        <groupId>org.jsoup</groupId>
+        <artifactId>jsoup</artifactId>
+        <version>1.9.2</version>
+    </dependency>
+    <dependency>
+        <groupId>org.blinkenlights.jid3</groupId>
+        <artifactId>JID3</artifactId>
+        <version>0.46</version>
+    </dependency>
 
 </dependencies>
 
-	<build>
-		<plugins>
-	      <plugin>
-	        <groupId>org.apache.maven.plugins</groupId>
-	        <artifactId>maven-surefire-plugin</artifactId>
-	        <version>2.12.2</version>
-	        <configuration>
-	          <skipTests>true</skipTests>
-	        </configuration>
-	      </plugin>
-		</plugins>
-		
-	</build>
+    <build>
+        <plugins>
+          <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-surefire-plugin</artifactId>
+            <version>2.12.2</version>
+            <configuration>
+              <skipTests>true</skipTests>
+            </configuration>
+          </plugin>
+        </plugins>
+
+    </build>
 </project>
 

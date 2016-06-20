@@ -16,28 +16,28 @@ import org.apache.http.impl.client.DefaultHttpClient;
 import com.demo.music.downloader.HttpDownloader;
 
 public class SimpleHttpDownloader implements HttpDownloader {
-	public void download(String url, OutputStream out) throws IOException {
-		if(url==null || url.isEmpty()) {
-			return;
-		}
-		String fileName = FilenameUtils.getName(url); 
-		System.out.println("Downloading: "+fileName);
-		
-		HttpClient client = new DefaultHttpClient();
-		HttpGet httpGet = new HttpGet(url);
+    public void download(String url, OutputStream out) throws IOException {
+        if(url==null || url.isEmpty()) {
+            return;
+        }
+        String fileName = FilenameUtils.getName(url);
+        System.out.println("Downloading: "+fileName);
 
-		HttpResponse response = client.execute(httpGet);
+        HttpClient client = new DefaultHttpClient();
+        HttpGet httpGet = new HttpGet(url);
 
-		if (response.getStatusLine().getStatusCode() == HttpStatus.SC_OK) {
-			InputStream in = new BufferedInputStream(response.getEntity().getContent());
-			IOUtils.copy(in, out);
-			IOUtils.closeQuietly(in);
-			IOUtils.closeQuietly(out);
-			
-			out.flush();
-			out.close();
-			System.out.println("Downloaded: "+fileName);
-		}
-		
-	}
+        HttpResponse response = client.execute(httpGet);
+
+        if (response.getStatusLine().getStatusCode() == HttpStatus.SC_OK) {
+            InputStream in = new BufferedInputStream(response.getEntity().getContent());
+            IOUtils.copy(in, out);
+            IOUtils.closeQuietly(in);
+            IOUtils.closeQuietly(out);
+
+            out.flush();
+            out.close();
+            System.out.println("Downloaded: "+fileName);
+        }
+
+    }
 }
