@@ -40,7 +40,7 @@ public class NctParser implements MusicParser{
 	@Override
 	public Discography getDiscography(String url) {
 		Discography discography = new Discography();
-		discography.setAlbums(new ArrayList<Album>());
+		discography.setAlbums(new ArrayList<>());
 		NctHtmlPageParser nctHtmlPageParser = new NctHtmlPageParser(url);
 		List<String> albumList = nctHtmlPageParser.parseDiscographyLink();
 		for (String string : albumList) {

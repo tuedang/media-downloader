@@ -6,15 +6,10 @@ import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Set;
 
+import com.gargoylesoftware.htmlunit.html.*;
 import org.w3c.dom.Node;
 
 import com.demo.parser.common.HtmlParser;
-import com.gargoylesoftware.htmlunit.html.DomNode;
-import com.gargoylesoftware.htmlunit.html.HtmlDivision;
-import com.gargoylesoftware.htmlunit.html.HtmlListItem;
-import com.gargoylesoftware.htmlunit.html.HtmlPage;
-import com.gargoylesoftware.htmlunit.html.HtmlParagraph;
-import com.gargoylesoftware.htmlunit.html.HtmlUnorderedList;
 
 public class NctHtmlPageParser {
 	private static final String HOME_PAGE="http://www.nhaccuatui.com";
@@ -76,10 +71,8 @@ public class NctHtmlPageParser {
 	 * @return String
 	 */
 	public String parseArtist() {
-		HtmlDivision div = (HtmlDivision) htmlPage.getByXPath("//div[@class='name_title']").get(0);
-		DomNode h2= div.getLastChild();
-		DomNode domNode= h2.getFirstChild();
-		return domNode.asText();
+		HtmlHeading2 div = (HtmlHeading2) htmlPage.getByXPath("//div[@class='name_title']/h2[@class='name-singer']").get(0);
+		return div.asText();
 	}
 	public List<String> parseDiscographyLink() {
 		if(htmlPage.getByXPath("//ul[@class='list_playlist']").isEmpty()) {

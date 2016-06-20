@@ -37,7 +37,7 @@ public class AlbumDownloader{
 		downloadCallback.updateStatus(status);
 		
 		String imageFileName = artistName+ getExt(album.getImageLink(), "jpg");
-		if(org.apache.commons.lang.StringUtils.isNotEmpty(album.getImageLink()) && !targetOutputStreamContext.existed(imageFileName)) {
+		if(org.apache.commons.lang3.StringUtils.isNotEmpty(album.getImageLink()) && !targetOutputStreamContext.existed(imageFileName)) {
 			OutputStream imgOs = targetOutputStreamContext.createOutputStream(imageFileName);
 			httpDownloader.download(album.getImageLink(), imgOs);
 			imgOs.close();
