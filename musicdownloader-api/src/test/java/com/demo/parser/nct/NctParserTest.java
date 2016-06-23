@@ -1,10 +1,8 @@
 package com.demo.parser.nct;
 
-import org.testng.annotations.Test;
-
 import com.demo.music.sdo.Album;
-import com.demo.music.sdo.Discography;
 import com.demo.music.sdo.Track;
+import org.junit.Test;
 
 public class NctParserTest {
     @Test
@@ -18,14 +16,6 @@ public class NctParserTest {
         for (Track track : album.getTracks()) {
             System.out.println(track);
         }
-    }
-
-    @Test
-    public void getDiscography() {
-        String url="http://www.nhaccuatui.com/nghe?L=GaLiPWY0pzO3";
-        NctParser nctParser = new NctParser();
-        Discography discography= nctParser.getDiscography(url);
-        System.out.println(discography);
     }
 
 }

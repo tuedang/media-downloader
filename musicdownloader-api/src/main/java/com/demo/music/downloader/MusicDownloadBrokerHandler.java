@@ -1,15 +1,14 @@
 package com.demo.music.downloader;
 
-import java.io.File;
-import java.util.concurrent.Callable;
-
-import com.demo.common.StringUtils;
+import com.demo.parser.common.StringUtils;
 import com.demo.music.downloader.TargetOutputStreamContext.TargetType;
 import com.demo.music.sdo.Album;
-import com.demo.music.sdo.Discography;
 import com.demo.parser.common.MusicParser;
 import com.demo.parser.nct.NctParser;
 import com.demo.parser.zing.ZingParser;
+
+import java.io.File;
+import java.util.concurrent.Callable;
 
 public class MusicDownloadBrokerHandler implements Callable<String> {
     private String url;
@@ -50,13 +49,7 @@ public class MusicDownloadBrokerHandler implements Callable<String> {
         downloadCallback.updateStatus(status);
 
         if(discographyType) {
-            Discography discography = musicParser.getDiscography(url);
-            File discographyFolder = new File(dest, discography.getName());
-            discographyFolder.mkdirs();
-            for(Album album: discography.getAlbums()) {
-//				AlbumDownloader albumDownloader = new AlbumDownloader(album, discographyFolder);
-//				albumDownloader.downloadAlbum(downloadCallback);
-            }
+            throw new RuntimeException("Not supported yet");
         } else {
             Album album = musicParser.getAlbum(url);
             if(album==null|| album.getTracks().isEmpty()) {

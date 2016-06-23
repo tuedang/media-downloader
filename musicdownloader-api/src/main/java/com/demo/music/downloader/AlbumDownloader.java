@@ -5,7 +5,7 @@ import java.io.OutputStream;
 
 import org.apache.commons.io.FilenameUtils;
 
-import com.demo.common.StringUtils;
+import com.demo.parser.common.StringUtils;
 import com.demo.music.downloader.TargetOutputStreamContext.TargetType;
 import com.demo.music.downloader.httpdownloader.SimpleHttpDownloader;
 import com.demo.music.generator.M3UGenerator;

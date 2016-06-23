@@ -1,12 +1,13 @@
 package com.demo.parser.nct;
 
-import java.util.List;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.junit.runners.JUnit4;
 
-import org.testng.annotations.Test;
-
+@RunWith(JUnit4.class)
 public class NctHtmlPageParserTest {
 
-    private String url="http://www.nhaccuatui.com/playlist/boyband-va-nhung-ca-khuc-hay-nhat-backstreet-boys-ft-westlife-ft-blue.m1k8VVeWinCn.html";
+    private String url="http://www.nhaccuatui.com/playlist/tuyen-tap-ca-khuc-hay-nhat-cua-boyband-vol-1-va.m1k8VVeWinCn.html";
     private NctHtmlPageParser nctHtmlParser = new NctHtmlPageParser(url);
 
     @Test
@@ -33,15 +34,5 @@ public class NctHtmlPageParserTest {
         String playlistLink = nctHtmlParser.parseArtist();
         System.out.println(playlistLink);
     }
-
-    @Test (enabled=false)
-    public void parseDiscographyLink() throws Exception {
-        List<String> discographyLinks = nctHtmlParser.parseDiscographyLink();
-        System.out.println(discographyLinks.size());
-        for (String string : discographyLinks) {
-            System.out.println(string);
-        }
-    }
-
 
 }

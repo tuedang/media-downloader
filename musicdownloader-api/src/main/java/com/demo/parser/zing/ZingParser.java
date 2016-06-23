@@ -37,25 +37,4 @@ public class ZingParser implements MusicParser{
         }
     }
 
-    @Override
-    public Discography getDiscography(String url) {
-//		System.out.println("Not support in zing");
-
-        Discography discography = new Discography();
-        discography.setAlbums(new ArrayList<Album>());
-        ZingHtmlPageParser zingHtmlParser = new ZingHtmlPageParser(url);
-        List<String> albumList = zingHtmlParser.parseDiscographyLink();
-        for (String string : albumList) {
-            Album album = getAlbum(string);
-            if(album.getArtist()==null) {
-                break;
-            }
-            discography.getAlbums().add(album);
-        }
-
-        String discographyName = DiscographyHelper.getDiscographyName(discography.getAlbums());
-        discography.setName(discographyName);
-        return discography;
-    }
-
 }

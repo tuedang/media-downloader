@@ -22,7 +22,7 @@ import java.util.concurrent.TimeUnit;
 import org.apache.commons.io.FilenameUtils;
 import org.apache.commons.io.IOUtils;
 
-import com.demo.common.FileUtils;
+import com.demo.parser.common.FileUtils;
 import com.demo.music.downloader.HttpDownloader;
 
 public class MultipartHttpDownloader implements HttpDownloader{

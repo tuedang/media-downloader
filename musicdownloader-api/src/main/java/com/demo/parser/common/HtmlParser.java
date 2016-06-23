@@ -11,7 +11,7 @@ import com.gargoylesoftware.htmlunit.WebClient;
 import com.gargoylesoftware.htmlunit.html.HtmlPage;
 
 public class HtmlParser {
-    public static HtmlPage parse(String url, boolean jsEnable) throws FailingHttpStatusCodeException, MalformedURLException, IOException {
+    public static HtmlPage parse(String url, boolean jsEnable) throws FailingHttpStatusCodeException, IOException {
         WebClient webClient = new WebClient(BrowserVersion.BEST_SUPPORTED);
         webClient.setActiveXObjectMap(null);
         webClient.getOptions().setCssEnabled(false);

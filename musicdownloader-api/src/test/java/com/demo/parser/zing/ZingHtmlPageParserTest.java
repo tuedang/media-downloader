@@ -1,8 +1,8 @@
 package com.demo.parser.zing;
 
-import java.util.List;
+import org.junit.Test;
 
-import org.testng.annotations.Test;
+import java.util.List;
 
 public class ZingHtmlPageParserTest {
 	

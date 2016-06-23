@@ -6,7 +6,7 @@ import java.io.OutputStream;
 
 import org.apache.commons.io.FileUtils;
 
-import com.demo.common.StringUtils;
+import com.demo.parser.common.StringUtils;
 import com.demo.music.sdo.Album;
 import com.demo.music.sdo.Track;
 
