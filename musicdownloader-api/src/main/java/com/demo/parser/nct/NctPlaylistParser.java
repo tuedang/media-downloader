@@ -8,6 +8,7 @@ import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 
+import com.demo.parser.common.HtmlPageContent;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
@@ -16,6 +17,15 @@ import org.xml.sax.SAXException;
 import com.demo.music.sdo.Track;
 
 public class NctPlaylistParser {
+
+    public List<Track> parseJsoup(HtmlPageContent htmlPageContent) {
+        org.jsoup.nodes.Document document= htmlPageContent.getJsoupDocument();
+        document.select("track").forEach((element)-> {
+            System.out.println("-->"+element.select("title").text());
+        });
+        return null;
+    }
+
     public List<Track> parseFromPlaylist(String url) throws ParserConfigurationException, SAXException, IOException {
         int id = 0;
         // get the factory

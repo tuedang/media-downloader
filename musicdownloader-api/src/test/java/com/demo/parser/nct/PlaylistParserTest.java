@@ -5,6 +5,8 @@ import java.util.List;
 
 import javax.xml.parsers.ParserConfigurationException;
 
+import com.demo.parser.common.HtmlPageContent;
+import com.google.common.io.Resources;
 import org.junit.Test;
 import org.xml.sax.SAXException;
 
@@ -19,6 +21,11 @@ public class PlaylistParserTest {
         for (Track track : tracks) {
             System.out.println(track);
         }
+    }
+
+    @Test
+    public void parseJsoup() throws IOException {
+        new NctPlaylistParser().parseJsoup(HtmlPageContent.fromURL(Resources.getResource("com/demo/parser/tuyen-tap-nhung-ca-khuc-rock-quoc-te-hay-adam-lambert.playlist.xml"), HtmlPageContent.ContentType.XML));
     }
 
 }
