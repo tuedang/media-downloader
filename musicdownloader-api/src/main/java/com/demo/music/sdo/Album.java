@@ -9,16 +9,18 @@ public class Album {
     private String artist;
     private String imageLink;
     private List<Track> tracks;
+    private String playlistLink;
 
     public Album() {
     }
 
-    public Album(String name, String refLink, String artist, String imageLink, List<Track> tracks) {
-        this.name=name;
-        this.refLink=refLink;
-        this.artist=artist;
-        this.imageLink=imageLink;
-        this.tracks= tracks;
+    public Album(String name, String refLink, String artist, String imageLink, List<Track> tracks, String playlistLink) {
+        this.name = name;
+        this.refLink = refLink;
+        this.artist = artist;
+        this.imageLink = imageLink;
+        this.tracks = tracks;
+        this.playlistLink = playlistLink;
     }
 
     public Long getId() {
@@ -69,5 +71,11 @@ public class Album {
         this.refLink = refLink;
     }
 
+    public String getPlaylistLink() {
+        return playlistLink;
+    }
 
+    public void setPlaylistLink(String playlistLink) {
+        this.playlistLink = playlistLink;
+    }
 }

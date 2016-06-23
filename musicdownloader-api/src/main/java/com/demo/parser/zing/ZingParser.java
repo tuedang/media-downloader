@@ -30,7 +30,7 @@ public class ZingParser implements MusicParser{
             String albumLink = zingHtmlPageParser.parseAlbumLink();
             String albumName = zingHtmlPageParser.parseAlbumName();
             String artist = zingHtmlPageParser.parseArtist();
-            return new Album(albumName, url, artist, albumLink, tracks);
+            return new Album(albumName, url, artist, albumLink, tracks, pageLink);
         } catch (Exception e) {
             e.printStackTrace();
             throw new RuntimeException(e.getMessage());

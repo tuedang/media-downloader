@@ -30,7 +30,7 @@ public class NctParser implements MusicParser{
             String albumLink = nctHtmlPageParser.parseAlbumLink();
             String albumName = nctHtmlPageParser.parseAlbumName();
             String artist = nctHtmlPageParser.parseArtist();
-            return new Album(albumName, url, artist, albumLink, tracks);
+            return new Album(albumName, url, artist, albumLink, tracks, pageLink);
         } catch (Exception e) {
             e.printStackTrace();
             throw new RuntimeException(e.getMessage());
