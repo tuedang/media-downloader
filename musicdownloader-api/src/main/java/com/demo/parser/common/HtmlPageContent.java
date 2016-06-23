@@ -1,7 +1,7 @@
 package com.demo.parser.common;
 
-import com.gargoylesoftware.htmlunit.html.HtmlPage;
 import com.google.common.io.Resources;
+import org.jsoup.Connection;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.parser.Parser;
@@ -33,15 +33,19 @@ public class HtmlPageContent {
         this(content, ContentType.HTML);
     }
 
-    public static HtmlPageContent fromURL(URL url, ContentType contentType) throws IOException {
+    public static HtmlPageContent fromURL(URL url, ContentType contentType) {
         String text;
-        if ("file".equals(url.getProtocol())) {
-            text = Resources.toString(url, StandardCharsets.UTF_8);
-        } else {
-            HtmlPage htmlPage = HtmlParser.parse(url.getPath());
-            text = htmlPage.asXml();
+        try {
+            if ("file".equals(url.getProtocol())) {
+                text = Resources.toString(url, StandardCharsets.UTF_8);
+            } else {
+                Connection connection = Jsoup.connect(url.toString());
+                text = connection.execute().body();
+            }
+            return new HtmlPageContent(text, contentType);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
         }
-        return new HtmlPageContent(text, contentType);
     }
 
     public String getContent() {

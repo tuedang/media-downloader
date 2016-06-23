@@ -3,6 +3,7 @@ package com.demo.music.generator;
 import java.io.File;
 import java.io.IOException;
 import java.io.OutputStream;
+import java.nio.charset.Charset;
 
 import org.apache.commons.io.FileUtils;
 
@@ -20,7 +21,7 @@ public class M3UGenerator {
             sb.append(NEW_LINE);
         }
         File out = new File(targetFolder, album.getName()+".m3u");
-        FileUtils.writeStringToFile(out, sb.toString());
+        FileUtils.writeStringToFile(out, sb.toString(), Charset.defaultCharset());
     }
 
     public static void generateM3U(Album album, OutputStream os) throws IOException {

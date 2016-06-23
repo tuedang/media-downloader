@@ -3,11 +3,11 @@ package com.demo.music.downloader;
 import java.io.IOException;
 import java.io.OutputStream;
 
+import com.demo.music.generator.AudioTagger;
 import com.demo.parser.common.StringHtmlUtils;
 import com.demo.music.downloader.TargetOutputStreamContext.TargetType;
 import com.demo.music.downloader.httpdownloader.SimpleHttpDownloader;
 import com.demo.music.generator.M3UGenerator;
-import com.demo.music.generator.Mp3TaggerJid;
 import com.demo.music.sdo.Album;
 import com.demo.music.sdo.TagInfo;
 import com.demo.music.sdo.Track;
@@ -70,7 +70,7 @@ public class AlbumDownloader{
             System.out.println(String.format("Tag file %s=[%s]\n", mp3FileName, tag));
 
             if(targetOutputStreamContext.getTargetType()==TargetType.FILE_SYSTEM) {
-                Mp3TaggerJid.tag(targetOutputStreamContext.getFileSystem(mp3FileName), tag);
+                AudioTagger.tag(targetOutputStreamContext.getFileSystem(mp3FileName), tag);
             }
 
             status.setCurrentTrack(track.getId());

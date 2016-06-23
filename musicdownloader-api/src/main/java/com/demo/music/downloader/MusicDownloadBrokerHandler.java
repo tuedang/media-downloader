@@ -3,11 +3,12 @@ package com.demo.music.downloader;
 import com.demo.parser.common.StringHtmlUtils;
 import com.demo.music.downloader.TargetOutputStreamContext.TargetType;
 import com.demo.music.sdo.Album;
-import com.demo.parser.common.MusicParser;
-import com.demo.parser.nct.NctParser;
-import com.demo.parser.zing.ZingParser;
+import com.demo.parser.api.MusicParser;
+import com.demo.parser.NctParser;
+import com.demo.parser.ZingParser;
 
 import java.io.File;
+import java.net.URL;
 import java.util.concurrent.Callable;
 
 public class MusicDownloadBrokerHandler implements Callable<String> {
@@ -51,7 +52,7 @@ public class MusicDownloadBrokerHandler implements Callable<String> {
         if(discographyType) {
             throw new RuntimeException("Not supported yet");
         } else {
-            Album album = musicParser.getAlbum(url);
+            Album album = musicParser.getAlbum(new URL(url));
             if(album==null|| album.getTracks().isEmpty()) {
                 return "FAILED";
             }
