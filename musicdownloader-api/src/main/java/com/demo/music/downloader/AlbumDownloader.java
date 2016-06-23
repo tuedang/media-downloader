@@ -3,9 +3,7 @@ package com.demo.music.downloader;
 import java.io.IOException;
 import java.io.OutputStream;
 
-import org.apache.commons.io.FilenameUtils;
-
-import com.demo.parser.common.StringUtils;
+import com.demo.parser.common.StringHtmlUtils;
 import com.demo.music.downloader.TargetOutputStreamContext.TargetType;
 import com.demo.music.downloader.httpdownloader.SimpleHttpDownloader;
 import com.demo.music.generator.M3UGenerator;
@@ -13,6 +11,8 @@ import com.demo.music.generator.Mp3TaggerJid;
 import com.demo.music.sdo.Album;
 import com.demo.music.sdo.TagInfo;
 import com.demo.music.sdo.Track;
+import org.apache.commons.io.FilenameUtils;
+import org.apache.commons.lang3.StringUtils;
 
 public class AlbumDownloader{
     private Album album;
@@ -37,7 +37,7 @@ public class AlbumDownloader{
         downloadCallback.updateStatus(status);
 
         String imageFileName = artistName+ getExt(album.getImageLink(), "jpg");
-        if(org.apache.commons.lang3.StringUtils.isNotEmpty(album.getImageLink()) && !targetOutputStreamContext.existed(imageFileName)) {
+        if(StringUtils.isNotEmpty(album.getImageLink()) && !targetOutputStreamContext.existed(imageFileName)) {
             OutputStream imgOs = targetOutputStreamContext.createOutputStream(imageFileName);
             httpDownloader.download(album.getImageLink(), imgOs);
             imgOs.close();
@@ -56,7 +56,7 @@ public class AlbumDownloader{
         status.setTotalTrack(album.getTracks().size());
         downloadCallback.updateStatus(status);
         for(Track track: album.getTracks()) {
-            String mp3FileName = StringUtils.unAccent(track.getTitle())+getExt(track.getLocation(), "mp3");
+            String mp3FileName = StringHtmlUtils.unAccent(track.getTitle())+getExt(track.getLocation(), "mp3");
             if(targetOutputStreamContext.existed(mp3FileName)) {
                 System.out.println(String.format("[%s] - Target file has been existed, do not download again.", mp3FileName));
                 continue;
@@ -64,7 +64,7 @@ public class AlbumDownloader{
             OutputStream mp3os= targetOutputStreamContext.createOutputStream(mp3FileName);
             httpDownloader.download(track.getLocation(), mp3os);
 
-            String artist = ! StringUtils.isEmpty(track.getCreator()) ? track.getCreator(): album.getArtist();
+            String artist = StringUtils.isNotEmpty(track.getCreator()) ? track.getCreator(): album.getArtist();
             TagInfo tag = new TagInfo(track.getId(), artist, album.getName(), track.getTitle());
             tag.setTotalTrack(album.getTracks().size());
             System.out.println(String.format("Tag file %s=[%s]\n", mp3FileName, tag));
@@ -78,7 +78,7 @@ public class AlbumDownloader{
         }
 
         System.out.println("Generate playlist:"+album.getName()+".m3u");
-        OutputStream m3u = targetOutputStreamContext.createOutputStream(StringUtils.unAccent(album.getName()) +".m3u");
+        OutputStream m3u = targetOutputStreamContext.createOutputStream(StringHtmlUtils.unAccent(album.getName()) +".m3u");
         M3UGenerator.generateM3U(album, m3u);
         m3u.close();
 

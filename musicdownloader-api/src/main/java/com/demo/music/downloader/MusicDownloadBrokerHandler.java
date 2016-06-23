@@ -1,6 +1,6 @@
 package com.demo.music.downloader;
 
-import com.demo.parser.common.StringUtils;
+import com.demo.parser.common.StringHtmlUtils;
 import com.demo.music.downloader.TargetOutputStreamContext.TargetType;
 import com.demo.music.sdo.Album;
 import com.demo.parser.common.MusicParser;
@@ -56,7 +56,7 @@ public class MusicDownloadBrokerHandler implements Callable<String> {
                 return "FAILED";
             }
 
-            String destFolder = new File(dest, StringUtils.trimCommonFileName(album.getName())).getAbsolutePath();
+            String destFolder = new File(dest, StringHtmlUtils.trimCommonFileName(album.getName())).getAbsolutePath();
             AlbumDownloader albumDownloader = new AlbumDownloader(album, new TargetOutputStreamContext(destFolder, TargetType.FILE_SYSTEM));
             albumDownloader.downloadAlbum(downloadCallback);
         }

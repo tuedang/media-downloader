@@ -21,7 +21,7 @@ public class HtmlParser {
         webClient.getOptions().setThrowExceptionOnScriptError(false);
         webClient.getOptions().setJavaScriptEnabled(jsEnable);
 
-        HtmlPage htmlPage = webClient.getPage(EncodeUrl.encode(url));
+        HtmlPage htmlPage = webClient.getPage(StringHtmlUtils.encode(url));
         webClient.close();
         return htmlPage;
     }

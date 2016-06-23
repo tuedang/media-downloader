@@ -6,7 +6,7 @@ import java.io.OutputStream;
 
 import org.apache.commons.io.FileUtils;
 
-import com.demo.parser.common.StringUtils;
+import com.demo.parser.common.StringHtmlUtils;
 import com.demo.music.sdo.Album;
 import com.demo.music.sdo.Track;
 
@@ -15,7 +15,7 @@ public class M3UGenerator {
     public static void generateM3U(Album album, File targetFolder) throws IOException {
         StringBuffer sb = new StringBuffer();
         for(Track track: album.getTracks()) {
-            sb.append(StringUtils.unAccent(track.getTitle()));
+            sb.append(StringHtmlUtils.unAccent(track.getTitle()));
             sb.append(".mp3");
             sb.append(NEW_LINE);
         }
@@ -26,7 +26,7 @@ public class M3UGenerator {
     public static void generateM3U(Album album, OutputStream os) throws IOException {
         StringBuffer sb = new StringBuffer();
         for(Track track: album.getTracks()) {
-            sb.append(StringUtils.unAccent(track.getTitle()));
+            sb.append(StringHtmlUtils.unAccent(track.getTitle()));
             sb.append(".mp3");
             sb.append(NEW_LINE);
         }

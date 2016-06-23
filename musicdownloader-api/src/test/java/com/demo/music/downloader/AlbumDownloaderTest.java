@@ -4,7 +4,7 @@ import java.io.IOException;
 
 import org.junit.Test;
 
-import com.demo.parser.common.StringUtils;
+import com.demo.parser.common.StringHtmlUtils;
 import com.demo.music.downloader.TargetOutputStreamContext.TargetType;
 import com.demo.music.sdo.Album;
 import com.demo.parser.nct.NctParser;
@@ -16,7 +16,7 @@ public class AlbumDownloaderTest {
         String url = "http://www.nhaccuatui.com/playlist/tuyen-tap-nhung-ca-khuc-rock-quoc-te-hay-adam-lambert.xQBpvCYhDpjq.html";
         Album album = new NctParser().getAlbum(url);
 
-        AlbumDownloader albumDownloader = new AlbumDownloader(album, new TargetOutputStreamContext("/Volumes/Data/NCT/"+StringUtils.trimCommonFileName(album.getName()), TargetType.FILE_SYSTEM));
+        AlbumDownloader albumDownloader = new AlbumDownloader(album, new TargetOutputStreamContext("/Volumes/Data/NCT/"+ StringHtmlUtils.trimCommonFileName(album.getName()), TargetType.FILE_SYSTEM));
         albumDownloader.downloadAlbum(new DownloadCallback() {
             public void updateStatus(Status status) {
                 System.out.println(status.getStatusType());
