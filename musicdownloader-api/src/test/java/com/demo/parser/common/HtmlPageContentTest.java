@@ -20,8 +20,7 @@ public class HtmlPageContentTest {
     @Test
     public void canLoadContent() {
         assertNotNull(htmlPageContent);
-        assertNotNull(htmlPageContent.getContent());
-        assertEquals(233923, htmlPageContent.getContent().length());
+        assertNotNull(htmlPageContent.getJsoupDocument().html());
     }
 
     @Test

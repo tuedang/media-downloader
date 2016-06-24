@@ -15,8 +15,8 @@ public class TargetOutputStreamContext {
 
     private TargetType targetType;
     private String basePath;
-    public TargetOutputStreamContext(String basePath, TargetType targetType) {
-        this.targetType = targetType;
+    public TargetOutputStreamContext(String basePath) {
+        this.targetType = TargetType.FILE_SYSTEM;
         this.basePath = basePath;
     }
 

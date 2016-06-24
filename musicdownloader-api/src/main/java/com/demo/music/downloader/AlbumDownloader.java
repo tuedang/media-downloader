@@ -90,8 +90,8 @@ public class AlbumDownloader{
 
     private String getExt(String url, String defaultValue) {
         String ext = FilenameUtils.getExtension(url);
-        if (ext == null || ext.isEmpty()) {
-            ext=defaultValue;
+        if (ext == null || ext.isEmpty() || ext.length() > 4) {
+            ext = defaultValue;
         }
         return "." + ext;
     }

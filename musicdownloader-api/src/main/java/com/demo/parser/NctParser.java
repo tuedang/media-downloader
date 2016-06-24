@@ -25,7 +25,7 @@ public class NctParser implements MusicParser {
         AtomicInteger trackIdInteger = new AtomicInteger(0);
         List<Track> tracks = HtmlPageContent.fromURL(new URL(pageLink), HtmlPageContent.ContentType.XML).getJsoupDocument()
                 .select("track")
-                .stream()
+                .parallelStream()
                 .map(e -> new Track(trackIdInteger.incrementAndGet(),
                         e.select("title").text(),
                         e.select("creator").text(),

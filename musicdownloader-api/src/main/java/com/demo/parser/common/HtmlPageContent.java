@@ -1,7 +1,9 @@
 package com.demo.parser.common;
 
+import com.gargoylesoftware.htmlunit.BrowserVersion;
+import com.gargoylesoftware.htmlunit.WebClient;
+import com.gargoylesoftware.htmlunit.html.HtmlPage;
 import com.google.common.io.Resources;
-import org.jsoup.Connection;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.parser.Parser;
@@ -12,13 +14,10 @@ import java.nio.charset.StandardCharsets;
 
 public class HtmlPageContent {
     public enum ContentType {
-        HTML, XML
+        HTML, XML, HTML_JS
     }
     private String content;
     private Document document;
-
-    private HtmlPageContent() {
-    }
 
     public HtmlPageContent(String content, ContentType contentType) {
         this.content = content;
@@ -29,18 +28,19 @@ public class HtmlPageContent {
         }
     }
 
-    public HtmlPageContent(String content) {
-        this(content, ContentType.HTML);
-    }
-
     public static HtmlPageContent fromURL(URL url, ContentType contentType) {
         String text;
         try {
             if ("file".equals(url.getProtocol())) {
                 text = Resources.toString(url, StandardCharsets.UTF_8);
             } else {
-                Connection connection = Jsoup.connect(url.toString());
-                text = connection.execute().body();
+                if (contentType == ContentType.HTML || contentType == ContentType.XML) {
+                    text = Jsoup.connect(url.toString()).execute().body();
+                } else if(contentType == ContentType.HTML_JS){
+                    text = parse(url, false);
+                } else {
+                    throw new IllegalArgumentException("Not accept file with HtmlJS engine");
+                }
             }
             return new HtmlPageContent(text, contentType);
         } catch (IOException e) {
@@ -48,12 +48,19 @@ public class HtmlPageContent {
         }
     }
 
-    public String getContent() {
-        return content;
-    }
+    private static String parse(URL url, boolean jsEnable) throws IOException {
+        WebClient webClient = new WebClient(BrowserVersion.BEST_SUPPORTED);
+        webClient.setActiveXObjectMap(null);
+        webClient.getOptions().setCssEnabled(false);
+        webClient.getOptions().setActiveXNative(false);
+        webClient.getOptions().setRedirectEnabled(false);
+        webClient.getOptions().setThrowExceptionOnFailingStatusCode(false);
+        webClient.getOptions().setThrowExceptionOnScriptError(false);
+        webClient.getOptions().setJavaScriptEnabled(jsEnable);
 
-    public void setContent(String content) {
-        this.content = content;
+        HtmlPage htmlPage = webClient.getPage(url);
+        webClient.close();
+        return htmlPage.asXml();
     }
 
     public Document getJsoupDocument() {

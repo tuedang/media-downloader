@@ -25,7 +25,7 @@ public class CsnParser implements MusicParser {
                 .map(e -> new Track(trackIdInteger.incrementAndGet(),
                         e.select("title").text(),
                         e.select("performer").text(),
-                        e.select("source").text()))
+                        decorateDownloadlink(e.select("source").text())))
                 .collect(Collectors.toList());
         if (tracks.size() > 0) {
             System.out.println("Playlist found.....");
@@ -35,6 +35,9 @@ public class CsnParser implements MusicParser {
         String albumName = htmlPageContent.getJsoupDocument().select("span.maintitle").text();
         String artist = htmlPageContent.getJsoupDocument().select("#fulllyric [href^='http://search.chiasenhac.com/search.php?mode=artist&']").text();
         return new Album(albumName, url.getRef(), artist, albumLink, tracks, "");
+    }
+    private String decorateDownloadlink(String refLink) {
+        return refLink;
     }
 
 }
