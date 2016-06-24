@@ -1,8 +1,6 @@
 package com.demo.parser;
 
 import com.demo.music.sdo.Album;
-import com.demo.parser.NctParser;
-import org.hamcrest.CoreMatchers;
 import org.junit.Test;
 
 import java.io.IOException;
@@ -11,6 +9,10 @@ import java.net.URL;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertThat;
+import static org.hamcrest.CoreMatchers.equalTo;
+import static org.hamcrest.CoreMatchers.hasItems;
+import static org.hamcrest.CoreMatchers.containsString;
+import static org.hamcrest.Matchers.hasProperty;
 
 public class NctParserTest {
     @Test
@@ -25,13 +27,16 @@ public class NctParserTest {
         assertNull(album.getImageLink());
 
         assertEquals(40, album.getTracks().size());
-        assertEquals("The Unforgiven II", album.getTracks().get(0).getTitle());
-        assertEquals("Metallica", album.getTracks().get(0).getCreator());
-        assertThat(album.getTracks().get(0).getLocation(), CoreMatchers.containsString("Unv_Audio13/TheUnforgivenIi-Metallica"));
 
-        assertEquals("The Misery", album.getTracks().get(39).getTitle());
-        assertEquals("Sonata Arctica", album.getTracks().get(39).getCreator());
-        assertThat(album.getTracks().get(39).getLocation(), CoreMatchers.containsString("NhacCuaTui010/TheMisery-SonataArctica"));
+        //0
+        assertThat(album.getTracks(), hasItems(hasProperty("title", equalTo("The Unforgiven II"))));
+        assertThat(album.getTracks(), hasItems(hasProperty("creator", equalTo("Metallica"))));
+        assertThat(album.getTracks(), hasItems(hasProperty("location", containsString("Unv_Audio13/TheUnforgivenIi-Metallica"))));
+
+        //39
+        assertThat(album.getTracks(), hasItems(hasProperty("title", equalTo("The Misery"))));
+        assertThat(album.getTracks(), hasItems(hasProperty("creator", equalTo("Sonata Arctica"))));
+        assertThat(album.getTracks(), hasItems(hasProperty("location", containsString("NhacCuaTui010/TheMisery-SonataArctica"))));
     }
 
 }

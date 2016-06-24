@@ -7,47 +7,8 @@
     </parent>
 
     <modelVersion>4.0.0</modelVersion>
-    <groupId>com.mediadownloader</groupId>
     <artifactId>musicdownloader-api</artifactId>
     <version>3.0.0</version>
-
-    <pluginRepositories>
-        <pluginRepository>
-            <id>onejar-maven-plugin.googlecode.com</id>
-            <url>http://onejar-maven-plugin.googlecode.com/svn/mavenrepo</url>
-        </pluginRepository>
-        <pluginRepository>
-            <id>mojo.codehaus.org</id>
-            <url>http://repo.sacredlabyrinth.net:8081/artifactory/list/spout-repo/</url>
-        </pluginRepository>
-    </pluginRepositories>
-    
-    <repositories>
-        <repository>
-          <snapshots><enabled>false</enabled></snapshots>
-          <id>ibiblio</id>
-          <name>Maven ibiblio</name>
-          <url>http://www.ibiblio.org/maven2</url>
-        </repository>
-        <repository>
-          <snapshots><enabled>true</enabled></snapshots>
-          <id>ibiblio2</id>
-          <name>Maven ibiblio2</name>
-          <url>http://mirrors.ibiblio.org/pub/mirrors/maven2/</url>
-        </repository>
-        <repository>
-            <id>nexus</id>
-            <url>https://oss.sonatype.org/content/groups/public/</url>
-        </repository>
-        <repository>
-            <id>jaudiotagger-repository</id>
-            <url>https://dl.bintray.com/ijabz/maven</url>
-        </repository>
-    </repositories>
-
-<properties>
-    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-</properties>
 
 <dependencies>
     <dependency>
@@ -70,7 +31,6 @@
         <artifactId>jaudiotagger</artifactId>
         <version>2.2.5</version>
     </dependency>
-
     <dependency>
         <groupId>org.jsoup</groupId>
         <artifactId>jsoup</artifactId>
@@ -78,19 +38,5 @@
     </dependency>
 
 </dependencies>
-
-    <build>
-        <plugins>
-          <plugin>
-            <groupId>org.apache.maven.plugins</groupId>
-            <artifactId>maven-surefire-plugin</artifactId>
-            <version>2.12.2</version>
-            <configuration>
-              <skipTests>true</skipTests>
-            </configuration>
-          </plugin>
-        </plugins>
-
-    </build>
 </project>
 
