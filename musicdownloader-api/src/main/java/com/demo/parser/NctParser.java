@@ -38,7 +38,7 @@ public class NctParser implements MusicParser {
         String albumLink = null;
         String albumName = htmlPageContent.cssSelector("div.name_title h1[itemprop='name']");
         String artist = htmlPageContent.cssSelector("div.name_title .name-singer");
-        return new Album(albumName, url.getRef(), artist, albumLink, tracks, pageLink);
+        return new Album(albumName, url.toString(), artist, albumLink, tracks, pageLink);
     }
 
 }

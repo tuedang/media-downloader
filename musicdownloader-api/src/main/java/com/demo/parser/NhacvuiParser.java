@@ -33,7 +33,7 @@ public class NhacvuiParser implements MusicParser {
         String albumLink = htmlPageContent.getJsoupDocument().select(".albumInfo-img img").attr("src");
         String albumName = htmlPageContent.getJsoupDocument().select(".albumInfo-txt .nghenhac-baihat").text().split("-")[0].trim();
         String artist = htmlPageContent.getJsoupDocument().select(".albumInfo-txt .nghenhac-baihat").text().split("-")[1].trim();
-        return new Album(albumName, url.getRef(), artist, albumLink, tracks, "");
+        return new Album(albumName, url.toString(), artist, albumLink, tracks, "");
     }
 
 }

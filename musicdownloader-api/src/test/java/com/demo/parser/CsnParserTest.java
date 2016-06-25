@@ -1,12 +1,16 @@
 package com.demo.parser;
 
 import com.demo.music.sdo.Album;
-import org.hamcrest.CoreMatchers;
+import com.demo.parser.common.StringHtmlUtils;
 import org.junit.Test;
 
 import java.io.IOException;
 import java.net.URL;
 
+import static org.hamcrest.CoreMatchers.containsString;
+import static org.hamcrest.CoreMatchers.equalTo;
+import static org.hamcrest.CoreMatchers.hasItems;
+import static org.hamcrest.Matchers.hasProperty;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertThat;
 
@@ -17,18 +21,18 @@ public class CsnParserTest {
         String url = "http://chiasenhac.com/nghe-album/the-portal-part-1~medwyn-goodall~1632548.html";
 
         Album album = new CsnParser().getAlbum(new URL(url));
-        assertEquals("Tuấn Hưng", album.getArtist());
-        assertEquals("Tìm Lại Bầu Trời", album.getName());
-        assertThat(album.getPlaylistLink(), CoreMatchers.containsString("http://mp3.zing.vn/xml/album-xml/"));
-        assertEquals("http://image.mp3.zdn.vn/thumb/165_165/covers/8/0/80839c0573a283bcf4a5fc9adaa7655b_1326512899.jpg", album.getImageLink());
+        assertEquals("Medwyn Goodall", album.getArtist());
+        assertEquals("The Portal (Part 1)", album.getName());
+        assertEquals(album.getPlaylistLink(), "");
+        assertEquals("http://data.chiasenhac.com/data/cover/54/53577.jpg", album.getImageLink());
 
-        assertEquals(10, album.getTracks().size());
-        assertEquals("Tìm Lại Bầu Trời", album.getTracks().get(0).getTitle());
-        assertEquals("Tuấn Hưng", album.getTracks().get(0).getCreator());
-        assertThat(album.getTracks().get(0).getLocation(), CoreMatchers.containsString("http://mp3.zing.vn/xml/load-song/"));
+        assertEquals(8, album.getTracks().size());
 
-        assertEquals("Anh Sẽ Vui ... Nếu (Instrumental)", album.getTracks().get(9).getTitle());
-        assertEquals("Tuấn Hưng", album.getTracks().get(9).getCreator());
-        assertThat(album.getTracks().get(9).getLocation(), CoreMatchers.containsString("http://mp3.zing.vn/xml/load-song/"));
+        //2
+        assertThat(album.getTracks(), hasItems(hasProperty("title", equalTo("Orbit"))));
+        assertThat(album.getTracks(), hasItems(hasProperty("creator", equalTo("Medwyn Goodall"))));
+        assertThat(album.getTracks(), hasItems(hasProperty("location", containsString("http://data.chiasenhac.com/downloads/1633/0/1632548-85848bc8/320/The%20Portal%20Part%201_%20-%20Medwyn%20Goodall%20[MP3%20320kbps].mp3"))));
+
     }
+
 }

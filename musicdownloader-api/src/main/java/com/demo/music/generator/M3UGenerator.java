@@ -13,22 +13,11 @@ import com.demo.music.sdo.Track;
 
 public class M3UGenerator {
     private static final String NEW_LINE="\r\n";
-    public static void generateM3U(Album album, File targetFolder) throws IOException {
-        StringBuffer sb = new StringBuffer();
-        for(Track track: album.getTracks()) {
-            sb.append(StringHtmlUtils.unAccent(track.getTitle()));
-            sb.append(".mp3");
-            sb.append(NEW_LINE);
-        }
-        File out = new File(targetFolder, album.getName()+".m3u");
-        FileUtils.writeStringToFile(out, sb.toString(), Charset.defaultCharset());
-    }
-
     public static void generateM3U(Album album, OutputStream os) throws IOException {
         StringBuffer sb = new StringBuffer();
         for(Track track: album.getTracks()) {
             sb.append(StringHtmlUtils.unAccent(track.getTitle()));
-            sb.append(".mp3");
+            sb.append(com.demo.parser.common.FileUtils.getExt(track.getLocation(), ".mp3"));
             sb.append(NEW_LINE);
         }
         os.write(sb.toString().getBytes());

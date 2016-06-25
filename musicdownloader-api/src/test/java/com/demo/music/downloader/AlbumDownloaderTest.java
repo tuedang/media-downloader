@@ -3,6 +3,7 @@ package com.demo.music.downloader;
 import java.io.IOException;
 import java.net.URL;
 
+import com.demo.parser.CsnParser;
 import com.demo.parser.NhacvuiParser;
 import com.demo.parser.ZingParser;
 import org.junit.Test;
@@ -47,4 +48,12 @@ public class AlbumDownloaderTest {
         albumDownloader.downloadAlbum(status -> System.out.println(status.getStatusType()));
     }
 
+    @Test
+    public void downloadAlbumCsn() throws IOException {
+        String url = "http://chiasenhac.vn/nghe-album/invocation-part-3~medwyn-goodall~1382118.html";
+        Album album = new CsnParser().getAlbum(new URL(url));
+
+        AlbumDownloader albumDownloader = new AlbumDownloader(album, new TargetOutputStreamContext("/Data/NCT/"+ StringHtmlUtils.trimCommonFileName(album.getName())));
+        albumDownloader.downloadAlbum(status -> System.out.println(status.getStatusType()));
+    }
 }

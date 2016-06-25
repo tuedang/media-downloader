@@ -1,5 +1,7 @@
 package com.demo.parser.common;
 
+import org.apache.commons.io.FilenameUtils;
+
 import java.text.DecimalFormat;
 
 public class FileUtils {
@@ -39,6 +41,14 @@ public class FileUtils {
             displaySize = String.valueOf(size) + "bytes";
         }
         return displaySize;
+    }
+
+    public static String getExt(String url, String defaultValue) {
+        String ext = FilenameUtils.getExtension(url);
+        if (ext == null || ext.isEmpty() || ext.length() > 4) {
+            ext = defaultValue;
+        }
+        return "." + ext;
     }
 
 }
