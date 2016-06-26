@@ -1,12 +1,9 @@
 package com.demo.music.downloader;
 
-import com.demo.parser.NhacvuiParser;
-import com.demo.parser.common.StringHtmlUtils;
-import com.demo.music.downloader.TargetOutputStreamContext.TargetType;
 import com.demo.music.sdo.Album;
 import com.demo.parser.api.MusicParser;
-import com.demo.parser.NctParser;
-import com.demo.parser.ZingParser;
+import com.demo.parser.api.PageParserRegistry;
+import com.demo.parser.common.StringHtmlUtils;
 
 import java.io.File;
 import java.net.URL;
@@ -18,16 +15,7 @@ public class MusicDownloadBrokerHandler implements Callable<String> {
     private boolean discographyType;
     private DownloadCallback downloadCallback;
     private Status status = new Status();
-
-    public MusicDownloadBrokerHandler(String url, String dest) {
-        this.url= url;
-        this.dest=dest;
-        this.downloadCallback = new DownloadCallback() {
-            public void updateStatus(Status status) {
-                // Do nothing
-            }
-        };
-    }
+    private PageParserRegistry pageParserRegistry = new PageParserRegistry();
 
     public MusicDownloadBrokerHandler(String url, String dest, boolean discography, DownloadCallback downloadCallback) {
         this.url = url;
@@ -41,14 +29,7 @@ public class MusicDownloadBrokerHandler implements Callable<String> {
         status.setStatusType(StatusType.START);
         downloadCallback.updateStatus(status);
 
-        MusicParser musicParser;
-        if (url.indexOf("nhaccuatui") != -1) {
-            musicParser = new NctParser();
-        } else if (url.indexOf("mp3.zing.vn") != -1) {
-            musicParser = new ZingParser();
-        } else {
-            musicParser = new NhacvuiParser();
-        }
+        MusicParser musicParser = pageParserRegistry.lookup(url).get();
 
         status.setStatusType(StatusType.PARSING);
         downloadCallback.updateStatus(status);

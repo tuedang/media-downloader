@@ -12,6 +12,12 @@ import com.demo.parser.common.HtmlPageContent;
 import com.demo.parser.api.MusicParser;
 
 public class ZingParser implements MusicParser {
+
+    @Override
+    public String getDomain() {
+        return "http://mp3.zing.vn/";
+    }
+
     @Override
     public Album getAlbum(URL url) throws IOException{
         HtmlPageContent htmlPageContent = HtmlPageContent.fromURL(url, HtmlPageContent.ContentType.HTML);

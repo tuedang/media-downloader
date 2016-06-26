@@ -6,9 +6,7 @@ import java.io.IOException;
 import java.net.URL;
 
 public interface MusicParser {
-    default String getDomain() {
-        return "http://";
-    }
+    String getDomain();
 
     Album getAlbum(URL url) throws IOException;
 }

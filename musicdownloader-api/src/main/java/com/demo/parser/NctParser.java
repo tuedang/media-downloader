@@ -13,6 +13,11 @@ import java.util.stream.Collectors;
 
 public class NctParser implements MusicParser {
 
+    @Override
+    public String getDomain() {
+        return "http://www.nhaccuatui.com/";
+    }
+
     public Album getAlbum(URL url) throws IOException {
         HtmlPageContent htmlPageContent = HtmlPageContent.fromURL(url, HtmlPageContent.ContentType.HTML);
         System.out.println("Discovering NCT website at " + url);

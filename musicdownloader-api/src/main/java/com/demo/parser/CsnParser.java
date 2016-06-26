@@ -18,6 +18,11 @@ import java.util.stream.Collectors;
 
 public class CsnParser implements MusicParser {
     @Override
+    public String getDomain() {
+        return "http://chiasenhac.com";
+    }
+
+    @Override
     public Album getAlbum(URL url) throws IOException {
         HtmlPageContent htmlPageContent = HtmlPageContent.fromURL(url, HtmlPageContent.ContentType.HTML);
         System.out.println("Discovering Chiasenhac website at " + url);
