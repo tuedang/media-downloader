@@ -10,6 +10,7 @@ import com.demo.music.sdo.Album;
 import com.demo.music.sdo.Track;
 import com.demo.parser.common.HtmlPageContent;
 import com.demo.parser.api.MusicParser;
+import com.demo.parser.common.StringHtmlUtils;
 
 public class ZingParser implements MusicParser {
 
@@ -45,7 +46,7 @@ public class ZingParser implements MusicParser {
         }
 
         String albumLink = htmlPageContent.getJsoupDocument().select("img.pthumb").attr("src");
-        String albumName = htmlPageContent.getJsoupDocument().select("h1.txt-primary").text();
+        String albumName = StringHtmlUtils.removeSpecialCharacter(htmlPageContent.getJsoupDocument().select("h1.txt-primary").text());
         String artist = htmlPageContent.getJsoupDocument().select("h2.txt-primary").text();
         return new Album(albumName, url.toString(), artist, albumLink, tracks, pageLink);
     }

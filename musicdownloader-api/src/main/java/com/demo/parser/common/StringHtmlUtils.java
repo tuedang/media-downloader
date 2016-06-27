@@ -1,5 +1,7 @@
 package com.demo.parser.common;
 
+import org.apache.commons.lang3.StringUtils;
+
 import java.net.MalformedURLException;
 import java.net.URI;
 import java.net.URISyntaxException;
@@ -26,6 +28,12 @@ public class StringHtmlUtils {
         }
         fn = fn.replaceAll("/", " ");
         return fn;
+    }
+
+    public static String removeSpecialCharacter(String s) {
+        return s.replaceAll("&","")
+                .replaceAll("\\...","")
+                .trim();
     }
 
     public static String encode(String src) {
