@@ -7,6 +7,7 @@ import com.demo.parser.common.StringHtmlUtils;
 
 import java.io.File;
 import java.net.URL;
+import java.util.Optional;
 import java.util.concurrent.Callable;
 
 public class MusicDownloadBrokerHandler implements Callable<String> {
@@ -29,25 +30,27 @@ public class MusicDownloadBrokerHandler implements Callable<String> {
         status.setStatusType(StatusType.START);
         downloadCallback.updateStatus(status);
 
-        MusicParser musicParser = pageParserRegistry.lookup(url).get();
+        Optional<MusicParser> musicParserLookup = pageParserRegistry.lookup(url);
+        if (!musicParserLookup.isPresent()) {
+            throw new IllegalArgumentException(String.format("Download from site is not supported yet, link=%s", url));
+        }
+        MusicParser musicParser = musicParserLookup.get();
 
         status.setStatusType(StatusType.PARSING);
         downloadCallback.updateStatus(status);
 
-        if (discographyType) {
-            throw new RuntimeException("Not supported yet");
-        } else {
-            Album album = musicParser.getAlbum(new URL(url));
-            if (album == null || album.getTracks().isEmpty()) {
-                return "FAILED";
-            }
-
-            String destFolder = new File(dest, StringHtmlUtils.trimCommonFileName(album.getName())).getAbsolutePath();
-            AlbumDownloader albumDownloader = new AlbumDownloader(album, new TargetOutputStreamContext(destFolder));
-            albumDownloader.downloadAlbum(downloadCallback);
+        Album album = musicParser.getAlbum(new URL(url));
+        if (album == null || album.getTracks().isEmpty()) {
+            status.setStatusType(StatusType.ERROR);
+            downloadCallback.updateStatus(status);
+            return StatusType.ERROR.name();
         }
 
-        return "FINISH";
+        String destFolder = new File(dest, StringHtmlUtils.trimCommonFileName(album.getName())).getAbsolutePath();
+        AlbumDownloader albumDownloader = new AlbumDownloader(album, new TargetOutputStreamContext(destFolder));
+        albumDownloader.downloadAlbum(downloadCallback);
+
+        return StatusType.FINISH.name();
     }
 
 }
