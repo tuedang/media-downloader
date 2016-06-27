@@ -10,7 +10,7 @@ import java.util.concurrent.Future;
 public class MusicDownloadBrokerHandlerTest {
     @Test
     public void runAll() throws ExecutionException, InterruptedException {
-        String url = "http://mp3.zing.vn/album/Tim-Lai-Bau-Troi-Tuan-Hung/ZWZ9E89F.html";
+        String url = "http://chiasenhac.com/nghe-album/invocation-part-3~medwyn-goodall~1382118.html";
         String dest = "/Data/NCT/";
         MusicDownloadBrokerHandler musicDownloadBrokerHandler = new MusicDownloadBrokerHandler(url, dest, false, new DownloadCallback() {
             @Override
