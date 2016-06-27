@@ -11,6 +11,7 @@
 
     <modules>
         <module>musicdownloader-api</module>
+        <module>musicdownloader-web</module>
         <!--<module>musicdownloader-gui</module>-->
     </modules>
 
