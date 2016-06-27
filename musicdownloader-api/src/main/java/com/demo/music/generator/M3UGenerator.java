@@ -17,7 +17,7 @@ public class M3UGenerator {
         StringBuffer sb = new StringBuffer();
         for(Track track: album.getTracks()) {
             sb.append(StringHtmlUtils.unAccent(track.getTitle()));
-            sb.append(com.demo.parser.common.FileUtils.getExt(track.getLocation(), ".mp3"));
+            sb.append(com.demo.parser.common.FileUtils.getExt(track.getLocation(), "mp3"));
             sb.append(NEW_LINE);
         }
         os.write(sb.toString().getBytes());
