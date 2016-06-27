@@ -10,12 +10,12 @@ import java.util.concurrent.Future;
 public class MusicDownloadBrokerHandlerTest {
     @Test
     public void runAll() throws ExecutionException, InterruptedException {
-        String url = "http://chiasenhac.com/nghe-album/invocation-part-3~medwyn-goodall~1382118.html";
+        String url = "http://mp3.zing.vn/album/Nhung-Bai-Hat-Hay-Nhat-Cua-Tran-Lap-Buc-Tuong-Tran-Lap/ZWZCOWA0.html";
         String dest = "/Data/NCT/";
         MusicDownloadBrokerHandler musicDownloadBrokerHandler = new MusicDownloadBrokerHandler(url, dest, false, new DownloadCallback() {
             @Override
             public void updateStatus(Status status) {
-                System.out.println(status);
+                System.out.println(status.getStatusType());
             }
         });
         ExecutorService es = Executors.newSingleThreadExecutor();

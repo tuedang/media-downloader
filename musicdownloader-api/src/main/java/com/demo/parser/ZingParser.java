@@ -46,7 +46,7 @@ public class ZingParser implements MusicParser {
         }
 
         String albumLink = htmlPageContent.getJsoupDocument().select("img.pthumb").attr("src");
-        String albumName = StringHtmlUtils.removeSpecialCharacter(htmlPageContent.getJsoupDocument().select("h1.txt-primary").text());
+        String albumName = htmlPageContent.getJsoupDocument().select("h1.txt-primary").text();
         String artist = htmlPageContent.getJsoupDocument().select("h2.txt-primary").text();
         return new Album(albumName, url.toString(), artist, albumLink, tracks, pageLink);
     }

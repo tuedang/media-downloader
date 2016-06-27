@@ -18,12 +18,12 @@ public class AlbumDownloader {
     private Album album;
     private TargetOutputStreamContext targetOutputStreamContext;
 
+    private HttpDownloader httpDownloader = new SimpleHttpDownloader();
+
     public AlbumDownloader(Album album, TargetOutputStreamContext targetContext) {
         this.album = album;
         this.targetOutputStreamContext = targetContext;
     }
-
-    private HttpDownloader httpDownloader = new SimpleHttpDownloader();
 
     public void downloadAlbum(DownloadCallback downloadCallback) throws IllegalStateException, IOException {
 
