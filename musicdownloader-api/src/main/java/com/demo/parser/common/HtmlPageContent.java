@@ -3,7 +3,7 @@ package com.demo.parser.common;
 import com.gargoylesoftware.htmlunit.BrowserVersion;
 import com.gargoylesoftware.htmlunit.WebClient;
 import com.gargoylesoftware.htmlunit.html.HtmlPage;
-import com.google.common.io.Resources;
+import org.apache.commons.io.IOUtils;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.parser.Parser;
@@ -32,7 +32,7 @@ public class HtmlPageContent {
         String text;
         try {
             if ("file".equals(url.getProtocol())) {
-                text = Resources.toString(url, StandardCharsets.UTF_8);
+                text = IOUtils.toString(url, StandardCharsets.UTF_8);
             } else {
                 if (contentType == ContentType.HTML || contentType == ContentType.XML) {
                     text = Jsoup.connect(url.toString()).execute().body();

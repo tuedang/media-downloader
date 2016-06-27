@@ -1,10 +1,10 @@
 package com.demo.parser.common;
 
-import com.google.common.io.Resources;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
 import java.io.IOException;
+import java.net.URL;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
@@ -14,7 +14,8 @@ public class HtmlPageContentTest {
 
     @BeforeClass
     public static void init() throws IOException {
-        htmlPageContent = HtmlPageContent.fromURL(Resources.getResource("com/demo/parser/tuyen-tap-nhung-ca-khuc-rock-quoc-te-hay-adam-lambert.xQBpvCYhDpjq.html"), HtmlPageContent.ContentType.HTML);
+        URL url = HtmlPageContentTest.class.getClassLoader().getResource("com/demo/parser/tuyen-tap-nhung-ca-khuc-rock-quoc-te-hay-adam-lambert.xQBpvCYhDpjq.html");
+        htmlPageContent = HtmlPageContent.fromURL(url, HtmlPageContent.ContentType.HTML);
     }
 
     @Test
