@@ -1,6 +1,10 @@
 package com.demo.music.downloader;
 
 public class Status {
+    public enum StatusType {
+        START, PARSING, DOWNLOAD_IMAGE, DOWNLOAD_SOUNDTRACK, FINISH, ERROR
+    }
+
     private StatusType statusType;
     private String comment;
     private int totalTrack;

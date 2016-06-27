@@ -7,22 +7,23 @@ import com.demo.music.generator.AudioTagger;
 import com.demo.parser.common.FileUtils;
 import com.demo.parser.common.StringHtmlUtils;
 import com.demo.music.downloader.TargetOutputStreamContext.TargetType;
-import com.demo.music.downloader.httpdownloader.SimpleHttpDownloader;
 import com.demo.music.generator.M3UGenerator;
 import com.demo.music.sdo.Album;
 import com.demo.music.sdo.TagInfo;
 import com.demo.music.sdo.Track;
 import org.apache.commons.lang3.StringUtils;
+import com.demo.music.downloader.Status.StatusType;
 
 public class AlbumDownloader {
     private Album album;
     private TargetOutputStreamContext targetOutputStreamContext;
 
-    private HttpDownloader httpDownloader = new SimpleHttpDownloader();
+    private HttpDownloader httpDownloader;
 
-    public AlbumDownloader(Album album, TargetOutputStreamContext targetContext) {
+    public AlbumDownloader(Album album, TargetOutputStreamContext targetContext, HttpDownloader httpDownloader) {
         this.album = album;
         this.targetOutputStreamContext = targetContext;
+        this.httpDownloader = httpDownloader;
     }
 
     public void downloadAlbum(DownloadCallback downloadCallback) throws IllegalStateException, IOException {
