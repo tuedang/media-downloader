@@ -8,11 +8,11 @@ import com.demo.parser.common.StringHtmlUtils;
 import com.demo.music.downloader.Status.StatusType;
 
 import java.io.File;
+import java.io.IOException;
 import java.net.URL;
 import java.util.Optional;
-import java.util.concurrent.Callable;
 
-public class MusicDownloadBrokerHandler implements Callable<String> {
+public class MusicDownloadBrokerHandler {
     private String url;
     private String dest;
     private boolean discographyType;
@@ -28,8 +28,7 @@ public class MusicDownloadBrokerHandler implements Callable<String> {
         this.downloadCallback = downloadCallback;
     }
 
-    @Override
-    public String call() throws Exception {
+    public String download() throws IOException {
         status.setStatusType(StatusType.START);
         downloadCallback.updateStatus(status);
 

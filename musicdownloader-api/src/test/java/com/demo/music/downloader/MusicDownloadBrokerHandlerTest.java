@@ -2,25 +2,17 @@ package com.demo.music.downloader;
 
 import org.junit.Test;
 
+import java.io.IOException;
 import java.util.concurrent.ExecutionException;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
-import java.util.concurrent.Future;
 
 public class MusicDownloadBrokerHandlerTest {
     @Test
-    public void runAll() throws ExecutionException, InterruptedException {
-        String url = "http://mp3.zing.vn/album/Nhung-Bai-Hat-Hay-Nhat-Cua-Tran-Lap-Buc-Tuong-Tran-Lap/ZWZCOWA0.html";
+    public void runAll() throws IOException, ExecutionException, InterruptedException {
         String dest = "/Data/NCT/";
-        MusicDownloadBrokerHandler musicDownloadBrokerHandler = new MusicDownloadBrokerHandler(url, dest, false, new DownloadCallback() {
-            @Override
-            public void updateStatus(Status status) {
-                System.out.println(status.getStatusType());
-            }
-        });
-        ExecutorService es = Executors.newSingleThreadExecutor();
-        Future<String> result = es.submit(musicDownloadBrokerHandler);
-        result.get();
+
+        MusicDownloadManager musicDownloadManager = MusicDownloadManager.getInstance(status -> System.out.println(status.getStatusType()));
+        musicDownloadManager.download("http://mp3.zing.vn/album/Tim-Lai-Bau-Troi-Tuan-Hung/ZWZ9E89F.html", dest);
+        musicDownloadManager.download("http://www.nhaccuatui.com/playlist/anh-cu-di-di-single-hari-won.LSzTSgccoNrA.html", dest);
 
     }
 }
