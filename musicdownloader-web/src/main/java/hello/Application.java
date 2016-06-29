@@ -1,6 +1,6 @@
 package hello;
 
-import com.media.browser.MyApp;
+import com.media.browser.AppLauncher;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.CommandLineRunner;
@@ -50,7 +50,7 @@ public class Application {
                 log.info(bauer.toString());
             }
             log.info("");
-            MyApp.main(null);
+            AppLauncher.main(null);
         };
     }
 }

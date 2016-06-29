@@ -2,7 +2,7 @@ package com.media.browser;
 
 import javax.swing.*;
 
-public class MyApp {
+public class AppLauncher {
     public static void main(String[] args) {
         String appUrl = "http://localhost:8080";
         if (java.awt.Desktop.getDesktop() != null) {
