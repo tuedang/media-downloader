@@ -33,7 +33,7 @@ public class MusicDownloadManager {
             } catch (IOException e) {
                 e.printStackTrace();
             }
-        }).get();
+        });
 
     }
 }

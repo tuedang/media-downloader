@@ -1,21 +1,16 @@
 package hello;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.util.StringUtils;
-
 import com.vaadin.annotations.Theme;
 import com.vaadin.data.util.BeanItemContainer;
+import com.vaadin.event.UIEvents;
 import com.vaadin.server.FontAwesome;
 import com.vaadin.server.VaadinRequest;
 import com.vaadin.spring.annotation.SpringUI;
-import com.vaadin.ui.Button;
-import com.vaadin.ui.Grid;
-import com.vaadin.ui.HorizontalLayout;
-import com.vaadin.ui.TextField;
-import com.vaadin.ui.UI;
-import com.vaadin.ui.VerticalLayout;
+import com.vaadin.ui.*;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.util.StringUtils;
 
-import java.util.concurrent.CompletableFuture;
+import java.util.Random;
 
 @SpringUI
 @Theme("valo")
@@ -23,79 +18,70 @@ public class VaadinUI extends UI {
 
     private final CustomerRepository repo;
 
-    private final CustomerEditor editor;
-
     private final Grid grid;
 
-    private final TextField filter;
+    private final TextField downloadUrl;
 
     private final Button downloadButton;
 
     @Autowired
-    public VaadinUI(CustomerRepository repo, CustomerEditor editor) {
+    public VaadinUI(CustomerRepository repo) {
         this.repo = repo;
-        this.editor = editor;
         this.grid = new Grid();
-        this.filter = new TextField();
+        this.downloadUrl = new TextField();
         this.downloadButton = new Button("Download", FontAwesome.DOWNLOAD);
     }
 
     @Override
     protected void init(VaadinRequest request) {
+        setPollInterval(1000);
+        addPollListener(new UIEvents.PollListener() {
+            @Override
+            public void poll(UIEvents.PollEvent event) {
+                if(new Random().nextBoolean()) {
+                    listCustomers("b");
+                } else {
+                    listCustomers("p");
+                }
+            }
+        });
+        render();
+
+    }
+
+    public void render() {
         // build layout
-        HorizontalLayout actions = new HorizontalLayout(filter, downloadButton);
-        VerticalLayout mainLayout = new VerticalLayout(actions, grid, editor);
+        HorizontalLayout actions = new HorizontalLayout(downloadUrl, downloadButton);
+        VerticalLayout mainLayout = new VerticalLayout(actions, grid);
         setContent(mainLayout);
 
         // Configure layouts and components
         actions.setSpacing(true);
+        actions.setWidth("100%");
         mainLayout.setMargin(true);
         mainLayout.setSpacing(true);
+        mainLayout.setWidth("100%");
 
-        grid.setHeight(300, Unit.PIXELS);
-        grid.setWidth(800, Unit.PIXELS);
+        grid.setWidth("100%");
         grid.setColumns("id", "firstName", "lastName");
 
-        filter.setInputPrompt("Grap the link from browser and paste here!");
-        filter.setWidth(600, Unit.PIXELS);
+        downloadUrl.setInputPrompt("Grap the link from browser and paste here!");
+        downloadUrl.setWidth("100%");
 
-        // Hook logic to components
-
-        // Replace listing with filtered content when user changes filter
-        filter.addTextChangeListener(e -> listCustomers(e.getText()));
-
-        // Connect selected Customer to editor or hide if none is selected
-        grid.addSelectionListener(e -> {
-            if (e.getSelected().isEmpty()) {
-                editor.setVisible(false);
-            } else {
-                editor.editCustomer((Customer) grid.getSelectedRow());
-            }
-        });
-
-        // Instantiate and edit new Customer the new button is clicked
-        downloadButton.addClickListener(e -> editor.editCustomer(new Customer("", "")));
-
-        // Listen changes made by the editor, refresh data from backend
-        editor.setChangeHandler(() -> {
-            editor.setVisible(false);
-            listCustomers(filter.getValue());
-        });
+        // Replace listing with filtered content when user changes downloadUrl
+        downloadUrl.addTextChangeListener(e -> listCustomers(e.getText()));
 
         // Initialize listing
         listCustomers(null);
     }
-
     // tag::listCustomers[]
     private void listCustomers(String text) {
         if (StringUtils.isEmpty(text)) {
-            grid.setContainerDataSource(
-                    new BeanItemContainer(Customer.class, repo.findAll()));
+            grid.setContainerDataSource(new BeanItemContainer(Customer.class, repo.findAll()));
         } else {
             grid.setContainerDataSource(new BeanItemContainer(Customer.class,
                     repo.findByLastNameStartsWithIgnoreCase(text)));
         }
     }
-    // end::listCustomers[]
 
 }
