@@ -19,7 +19,7 @@ import java.util.stream.Collectors;
 public class CsnParser implements MusicParser {
     @Override
     public String getDomain() {
-        return "http://chiasenhac.com";
+        return "http://chiasenhac.vn";
     }
 
     @Override

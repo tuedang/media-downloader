@@ -33,7 +33,7 @@ public class MusicDownloadBrokerHandler {
 
         Optional<MusicParser> musicParserLookup = pageParserRegistry.lookup(url);
         if (!musicParserLookup.isPresent()) {
-            throw new IllegalArgumentException(String.format("Download from site is not supported yet, link=%s", url));
+            throw new IOException(String.format("Download from site is not supported yet, link=%s", url));
         }
         MusicParser musicParser = musicParserLookup.get();
 
