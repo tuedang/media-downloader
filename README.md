@@ -7,7 +7,7 @@ Download audio album in multiple sites, until now
 - Nhac.vui.vn
 - Nhaccuatui.com
 - Mp3.zing.vn
-- Chiasenhac.com (download flac only - ignore if there's no flac file in album)
+- Chiasenhac.vn (download flac only - ignore if there's no flac file in album)
 
 **Generate playlist**
 
@@ -19,7 +19,9 @@ By default, the downloaded file name will be very long, the application correct 
 Beside that, all audio files will be tagged in fields: song title, track number, total track number, album, artist.
 
 # build
-System requirement: Java 8
+- System requirement:
+    - java 8
+    - maven
 
-- In order run as application (click and run): mvn package -P app
-- Build war file to run on tomcat or jetty: mvn package -P web
+- In order run as application (click and run): `mvn package -P app`
+- Build war file to run on tomcat or jetty: `mvn package -P web`
