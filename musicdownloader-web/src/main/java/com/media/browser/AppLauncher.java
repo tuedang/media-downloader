@@ -3,7 +3,7 @@ package com.media.browser;
 import javax.swing.*;
 
 public class AppLauncher {
-    public static void main(String[] args) {
+    public static void load() {
         String appUrl = "http://localhost:8080";
         if (java.awt.Desktop.getDesktop() != null) {
             JFrame frame = new JFrame();
@@ -22,7 +22,6 @@ public class AppLauncher {
         } else {
             BareBonesBrowserLaunch.openURL(appUrl);
         }
-
     }
 
 }

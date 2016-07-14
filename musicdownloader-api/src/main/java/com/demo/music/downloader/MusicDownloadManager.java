@@ -31,6 +31,7 @@ public class MusicDownloadManager {
             try {
                 musicDownloadBrokerHandler.download();
             } catch (IOException e) {
+                downloadCallback.updateStatus(new Status().track(0).statusType(Status.StatusType.ERROR).comment(e.getMessage()));
                 e.printStackTrace();
             }
         });

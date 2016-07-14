@@ -1,7 +1,6 @@
 package com.demo.music.downloader.httpdownloader;
 
 import com.demo.music.downloader.HttpDownloader;
-import org.apache.commons.io.FilenameUtils;
 import org.apache.commons.io.IOUtils;
 import org.apache.http.HttpResponse;
 import org.apache.http.HttpStatus;
@@ -22,9 +21,6 @@ public class SimpleHttpDownloader implements HttpDownloader {
         if(url==null || url.isEmpty()) {
             return;
         }
-        String fileName = FilenameUtils.getName(url);
-        System.out.println("Downloading: "+fileName);
-
         HttpClient client = HttpClientBuilder.create()
                 .setUserAgent("Mozilla/5.0")
                 .setRedirectStrategy(new DefaultRedirectStrategy() {
@@ -45,7 +41,6 @@ public class SimpleHttpDownloader implements HttpDownloader {
 
             out.flush();
             out.close();
-            System.out.println("Downloaded: "+fileName);
         }
 
     }

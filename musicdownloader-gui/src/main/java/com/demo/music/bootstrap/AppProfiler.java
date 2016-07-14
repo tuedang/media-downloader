@@ -10,7 +10,7 @@ import com.demo.music.sdo.MusicProfile;
 
 public class AppProfiler {
 	private static final String PROFILER="md.bin";
-	
+
 	public static String getAppProfile() {
 		String home = System.getProperty("user.home") + "/.MusicDownloader";
 		File f = new File(home);
@@ -35,7 +35,7 @@ public class AppProfiler {
 		try {
 			fin = new FileInputStream(new File(getAppProfile(), PROFILER));
 			return  (MusicProfile)SerializationUtils.deserialize(fin);
-			
+
 		} catch (Exception e) {
 			MusicProfile m = new MusicProfile();
 			persistProfile(m);

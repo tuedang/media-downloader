@@ -12,19 +12,11 @@
     <modules>
         <module>musicdownloader-api</module>
         <module>musicdownloader-web</module>
-        <!--<module>musicdownloader-gui</module>-->
     </modules>
 
-    <pluginRepositories>
-        <pluginRepository>
-            <id>onejar-maven-plugin.googlecode.com</id>
-            <url>http://onejar-maven-plugin.googlecode.com/svn/mavenrepo</url>
-        </pluginRepository>
-        <pluginRepository>
-            <id>mojo.codehaus.org</id>
-            <url>http://repo.sacredlabyrinth.net:8081/artifactory/list/spout-repo/</url>
-        </pluginRepository>
-    </pluginRepositories>
+    <properties>
+        <java.version>1.8</java.version>
+    </properties>
 
     <repositories>
         <repository>
@@ -32,12 +24,6 @@
             <id>ibiblio</id>
             <name>Maven ibiblio</name>
             <url>http://www.ibiblio.org/maven2</url>
-        </repository>
-        <repository>
-            <snapshots><enabled>true</enabled></snapshots>
-            <id>ibiblio2</id>
-            <name>Maven ibiblio2</name>
-            <url>http://mirrors.ibiblio.org/pub/mirrors/maven2/</url>
         </repository>
         <repository>
             <id>nexus</id>

@@ -48,10 +48,12 @@ public class Status {
         setStatusType(statusType);
         return this;
     }
+
     public Status comment(String comment) {
         setComment(comment);
         return this;
     }
+
     public Status track(int track) {
         setCurrentTrack(track);
         return this;

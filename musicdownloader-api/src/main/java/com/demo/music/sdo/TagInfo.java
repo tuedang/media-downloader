@@ -11,11 +11,12 @@ public class TagInfo {
     public TagInfo() {
     }
 
-    public TagInfo(Integer trackNumber, String artist, String albumTitle, String songtitle) {
+    public TagInfo(Integer trackNumber, String artist, String albumTitle, String songtitle, int totalTrack) {
         this.trackNumber = trackNumber;
         this.artist = artist;
         this.albumTitle = albumTitle;
         this.songTitle = songtitle;
+        this.totalTrack = totalTrack;
     }
     public Integer getTrackNumber() {
         return trackNumber;

@@ -29,8 +29,7 @@ public class MusicDownloadBrokerHandler {
     }
 
     public String download() throws IOException {
-        status.setCurrentTrack(0);
-        downloadCallback.updateStatus(status.statusType(StatusType.START));
+        downloadCallback.updateStatus(status.track(0).statusType(StatusType.START).comment("Download start"));
 
         Optional<MusicParser> musicParserLookup = pageParserRegistry.lookup(url);
         if (!musicParserLookup.isPresent()) {
@@ -38,11 +37,11 @@ public class MusicDownloadBrokerHandler {
         }
         MusicParser musicParser = musicParserLookup.get();
 
-        downloadCallback.updateStatus(status.statusType(StatusType.PARSING));
+        downloadCallback.updateStatus(status.track(0).statusType(StatusType.PARSING).comment("Underlying domain: " + musicParser.getDomain()));
 
         Album album = musicParser.getAlbum(new URL(url));
         if (album == null || album.getTracks().isEmpty()) {
-            downloadCallback.updateStatus(status.statusType(StatusType.ERROR));
+            downloadCallback.updateStatus(status.track(0).statusType(StatusType.ERROR));
             return StatusType.ERROR.name();
         }
 

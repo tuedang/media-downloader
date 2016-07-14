@@ -37,13 +37,13 @@ public class AlbumDownloader {
         }
 
         Status status = new Status();
-        status.setStatusType(StatusType.DOWNLOAD_IMAGE);
-        downloadCallback.updateStatus(status);
+        downloadCallback.updateStatus(status.track(0).statusType(StatusType.DOWNLOAD_IMAGE).comment(album.getImageLink()));
 
         //download album image
         String imageFileName = artistName + FileUtils.getExt(album.getImageLink(), "jpg");
         if (StringUtils.isNotEmpty(album.getImageLink()) && !targetOutputStreamContext.existed(imageFileName)) {
             OutputStream imgOs = targetOutputStreamContext.createOutputStream(imageFileName);
+            downloadCallback.updateStatus(new Status().track(0).statusType(StatusType.DOWNLOAD_IMAGE).comment("Download image:" + imageFileName));
             httpDownloader.download(album.getImageLink(), imgOs);
             imgOs.close();
         }
@@ -58,23 +58,23 @@ public class AlbumDownloader {
         }
 
         //Download music file and tag audio information
-        status.setStatusType(StatusType.DOWNLOAD_SOUNDTRACK);
         status.setTotalTrack(album.getTracks().size());
-        downloadCallback.updateStatus(status);
         Collections.sort(album.getTracks(), (o1, o2) -> o1.getId() - o2.getId());
         for (Track track : album.getTracks()) {
             String musicFileName = StringHtmlUtils.unAccent(track.getTitle()) + FileUtils.getExt(track.getLocation(), "mp3");
             if (targetOutputStreamContext.existed(musicFileName)) {
-                downloadCallback.updateStatus(status.comment(String.format("[%s] - Target file has been existed, do not download again.", musicFileName)));
+                downloadCallback.updateStatus(status
+                        .track(track.getId())
+                        .statusType(StatusType.DOWNLOAD_SOUNDTRACK)
+                        .comment(String.format("[%s] - Target file has been existed, do not download again.", musicFileName)));
                 continue;
             }
             OutputStream mp3os = targetOutputStreamContext.createOutputStream(musicFileName);
-            downloadCallback.updateStatus(status.comment("Downloading: " + FilenameUtils.getName(track.getLocation())));
+            downloadCallback.updateStatus(status.track(track.getId()).statusType(StatusType.DOWNLOAD_SOUNDTRACK).comment("Downloading: " + FilenameUtils.getName(track.getLocation())));
             httpDownloader.download(track.getLocation(), mp3os);
 
             String artist = StringUtils.isNotEmpty(track.getCreator()) ? track.getCreator() : album.getArtist();
-            TagInfo tag = new TagInfo(track.getId(), artist, album.getName(), track.getTitle());
-            tag.setTotalTrack(album.getTracks().size());
+            TagInfo tag = new TagInfo(track.getId(), artist, album.getName(), track.getTitle(), album.getTracks().size());
             downloadCallback.updateStatus(status.comment(String.format("Tag file %s=[%s]\n", musicFileName, tag)));
 
             if (targetOutputStreamContext.getTargetType() == TargetType.FILE_SYSTEM) {
@@ -91,10 +91,7 @@ public class AlbumDownloader {
         M3UGenerator.generateM3U(album, m3u);
         m3u.close();
 
-
-        downloadCallback.updateStatus(status.comment("Done............................................"));
-        status.setStatusType(StatusType.FINISH);
-        downloadCallback.updateStatus(status);
+        downloadCallback.updateStatus(status.track(0).statusType(StatusType.FINISH).comment("Done..."+ targetOutputStreamContext.getBasePath()));
     }
 
 }
