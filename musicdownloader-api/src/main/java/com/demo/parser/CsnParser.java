@@ -25,7 +25,6 @@ public class CsnParser implements MusicParser {
     @Override
     public Album getAlbum(URL url) throws IOException {
         HtmlPageContent htmlPageContent = HtmlPageContent.fromURL(url, HtmlPageContent.ContentType.HTML);
-        System.out.println("Discovering Chiasenhac website at " + url);
 
         AtomicInteger trackIdInteger = new AtomicInteger(0);
         List<Track> tracks = htmlPageContent.getJsoupDocument()
@@ -36,9 +35,6 @@ public class CsnParser implements MusicParser {
                         e.select("td span.gen").text().split("-")[1].trim(),
                         decorateDownloadlink(e.select("span.gen>a").first().attr("href"))))
                 .collect(Collectors.toList());
-        if (tracks.size() > 0) {
-            System.out.println("Playlist found.....");
-        }
 
         String albumLink = htmlPageContent.getJsoupDocument().select("#fulllyric img").first().attr("src");
         String albumName = htmlPageContent.getJsoupDocument().select("span.maintitle").text();

@@ -20,11 +20,9 @@ public class NctParser implements MusicParser {
 
     public Album getAlbum(URL url) throws IOException {
         HtmlPageContent htmlPageContent = HtmlPageContent.fromURL(url, HtmlPageContent.ContentType.HTML);
-        System.out.println("Discovering NCT website at " + url);
         String pageLink = htmlPageContent.searchText("div.playing_absolute", "player.peConfig.xmlURL", 4, "\";");
         if (pageLink == null) {
-            System.out.println("Cannot find the song(s)");
-            return null;
+            throw new IOException("Cannot find the song(s)");
         }
 
         AtomicInteger trackIdInteger = new AtomicInteger(0);
@@ -36,9 +34,6 @@ public class NctParser implements MusicParser {
                         e.select("creator").text(),
                         e.select("location").text()))
                 .collect(Collectors.toList());
-        if (tracks.size() > 0) {
-            System.out.println("Playlist found.....");
-        }
 
         String albumLink = null;
         String albumName = htmlPageContent.cssSelector("div.name_title h1[itemprop='name']");

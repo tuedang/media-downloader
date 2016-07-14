@@ -21,7 +21,6 @@ public class NhacvuiParser implements MusicParser {
     @Override
     public Album getAlbum(URL url) throws IOException{
         HtmlPageContent htmlPageContent = HtmlPageContent.fromURL(url, HtmlPageContent.ContentType.HTML_JS);
-        System.out.println("Discovering nhac.vui.vn website at " + url);
 
         AtomicInteger trackIdInteger = new AtomicInteger(0);
         List<Track> tracks = htmlPageContent.getJsoupDocument()
@@ -32,9 +31,6 @@ public class NhacvuiParser implements MusicParser {
                             e.select(".playListAlbum-item a.plst-casi").text(),
                             "http://nhac.vui.vn" + e.select(".playListAlbum-item .listNhac-btn .link-download").attr("href")))
                 .collect(Collectors.toList());
-        if (tracks.size() > 0) {
-            System.out.println("Playlist found.....");
-        }
 
         String albumLink = htmlPageContent.getJsoupDocument().select(".albumInfo-img img").attr("src");
         String albumName = htmlPageContent.getJsoupDocument().select(".albumInfo-txt .nghenhac-baihat").text().split("-")[0].trim();

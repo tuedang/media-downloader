@@ -10,7 +10,6 @@ import com.demo.music.sdo.Album;
 import com.demo.music.sdo.Track;
 import com.demo.parser.common.HtmlPageContent;
 import com.demo.parser.api.MusicParser;
-import com.demo.parser.common.StringHtmlUtils;
 
 public class ZingParser implements MusicParser {
 
@@ -22,14 +21,12 @@ public class ZingParser implements MusicParser {
     @Override
     public Album getAlbum(URL url) throws IOException{
         HtmlPageContent htmlPageContent = HtmlPageContent.fromURL(url, HtmlPageContent.ContentType.HTML);
-        System.out.println("Discovering ZING website at " + url);
 
         String pageLink = htmlPageContent.getJsoupDocument()
                 .select("[data-xml^='http://mp3.zing.vn/xml/album-xml']")
                 .attr("data-xml");
         if (pageLink == null) {
-            System.out.println("Cannot find the song(s)");
-            return null;
+            throw new IOException("Cannot find the song(s)");
         }
 
         AtomicInteger trackIdInteger = new AtomicInteger(0);
@@ -41,9 +38,6 @@ public class ZingParser implements MusicParser {
                         e.select("performer").text(),
                         e.select("source").text()))
                 .collect(Collectors.toList());
-        if (tracks.size() > 0) {
-            System.out.println("Playlist found.....");
-        }
 
         String albumLink = htmlPageContent.getJsoupDocument().select("img.pthumb").attr("src");
         String albumName = htmlPageContent.getJsoupDocument().select("h1.txt-primary").text();
