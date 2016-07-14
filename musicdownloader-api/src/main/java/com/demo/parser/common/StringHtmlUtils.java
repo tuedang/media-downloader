@@ -25,6 +25,7 @@ public class StringHtmlUtils {
             fn = fn.replaceFirst("\\.", "");
         }
         fn = fn.replaceAll("/", " ");
+        fn = fn.replaceAll(":", "");
         fn = fn.replaceAll("&","").replaceAll("\\.","").trim();
         return fn;
     }
