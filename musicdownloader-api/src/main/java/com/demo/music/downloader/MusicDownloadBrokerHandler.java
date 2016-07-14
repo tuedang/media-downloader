@@ -29,8 +29,8 @@ public class MusicDownloadBrokerHandler {
     }
 
     public String download() throws IOException {
-        status.setStatusType(StatusType.START);
-        downloadCallback.updateStatus(status);
+        status.setCurrentTrack(0);
+        downloadCallback.updateStatus(status.statusType(StatusType.START));
 
         Optional<MusicParser> musicParserLookup = pageParserRegistry.lookup(url);
         if (!musicParserLookup.isPresent()) {
@@ -38,13 +38,11 @@ public class MusicDownloadBrokerHandler {
         }
         MusicParser musicParser = musicParserLookup.get();
 
-        status.setStatusType(StatusType.PARSING);
-        downloadCallback.updateStatus(status);
+        downloadCallback.updateStatus(status.statusType(StatusType.PARSING));
 
         Album album = musicParser.getAlbum(new URL(url));
         if (album == null || album.getTracks().isEmpty()) {
-            status.setStatusType(StatusType.ERROR);
-            downloadCallback.updateStatus(status);
+            downloadCallback.updateStatus(status.statusType(StatusType.ERROR));
             return StatusType.ERROR.name();
         }
 

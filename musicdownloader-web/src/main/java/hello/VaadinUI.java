@@ -1,8 +1,10 @@
 package hello;
 
+import com.demo.music.downloader.DownloadCallback;
+import com.demo.music.downloader.MusicDownloadManager;
+import com.demo.music.downloader.Status;
 import com.vaadin.annotations.Theme;
 import com.vaadin.data.util.BeanItemContainer;
-import com.vaadin.event.UIEvents;
 import com.vaadin.server.FontAwesome;
 import com.vaadin.server.VaadinRequest;
 import com.vaadin.spring.annotation.SpringUI;
@@ -10,7 +12,12 @@ import com.vaadin.ui.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.StringUtils;
 
-import java.util.Random;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 @SpringUI
 @Theme("valo")
@@ -35,18 +42,8 @@ public class VaadinUI extends UI {
     @Override
     protected void init(VaadinRequest request) {
         setPollInterval(1000);
-        addPollListener(new UIEvents.PollListener() {
-            @Override
-            public void poll(UIEvents.PollEvent event) {
-                if(new Random().nextBoolean()) {
-                    listCustomers("b");
-                } else {
-                    listCustomers("p");
-                }
-            }
-        });
+        addPollListener(pollEvent -> listProgress());
         render();
-
     }
 
     public void render() {
@@ -63,25 +60,31 @@ public class VaadinUI extends UI {
         mainLayout.setWidth("100%");
 
         grid.setWidth("100%");
-        grid.setColumns("id", "firstName", "lastName");
+        grid.setColumns("currentTrack", "comment", "statusType");
 
         downloadUrl.setInputPrompt("Grap the link from browser and paste here!");
+        downloadUrl.setValue("http://www.nhaccuatui.com/playlist/anh-cu-di-di-single-hari-won.LSzTSgccoNrA.html");
         downloadUrl.setWidth("100%");
 
-        // Replace listing with filtered content when user changes downloadUrl
-        downloadUrl.addTextChangeListener(e -> listCustomers(e.getText()));
-
-        // Initialize listing
-        listCustomers(null);
+        downloadButton.addClickListener(e -> {
+            String dest = "/Data/NCT/";
+            MusicDownloadManager musicDownloadManager = MusicDownloadManager.getInstance(new DownloadCallback() {
+                @Override
+                public void updateStatus(Status status) {
+                    listDownloadAudioTrack(status);
+                }
+            });
+            musicDownloadManager.download(downloadUrl.getValue(), dest);
+        });
     }
-    // tag::listCustomers[]
-    private void listCustomers(String text) {
-        if (StringUtils.isEmpty(text)) {
-            grid.setContainerDataSource(new BeanItemContainer(Customer.class, repo.findAll()));
-        } else {
-            grid.setContainerDataSource(new BeanItemContainer(Customer.class,
-                    repo.findByLastNameStartsWithIgnoreCase(text)));
-        }
+
+//    private Set<Status> statuses = ConcurrentHashMap.newKeySet();
+    List<Status> statuses = new CopyOnWriteArrayList();
+    private void listDownloadAudioTrack(Status status) {
+        statuses.add(status.clone());
+    }
+    private void listProgress() {
+        grid.setContainerDataSource(new BeanItemContainer(Status.class, statuses));
     }
 
 }

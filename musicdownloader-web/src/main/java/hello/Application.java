@@ -21,31 +21,31 @@ public class Application {
     public CommandLineRunner loadData(CustomerRepository repository) {
         return (args) -> {
             // save a couple of customers
-            repository.save(new Customer("Jack", "Bauer"));
-            repository.save(new Customer("Chloe", "O'Brian"));
-            repository.save(new Customer("Kim", "Bauer"));
-            repository.save(new Customer("David", "Palmer"));
-            repository.save(new Customer("Michelle", "Dessler"));
+            repository.save(new AudioTrackProgress("Jack", "Bauer"));
+            repository.save(new AudioTrackProgress("Chloe", "O'Brian"));
+            repository.save(new AudioTrackProgress("Kim", "Bauer"));
+            repository.save(new AudioTrackProgress("David", "Palmer"));
+            repository.save(new AudioTrackProgress("Michelle", "Dessler"));
 
             // fetch all customers
             log.info("Customers found with findAll():");
             log.info("-------------------------------");
-            for (Customer customer : repository.findAll()) {
-                log.info(customer.toString());
+            for (AudioTrackProgress audioTrackProgress : repository.findAll()) {
+                log.info(audioTrackProgress.toString());
             }
             log.info("");
 
-            // fetch an individual customer by ID
-            Customer customer = repository.findOne(1L);
-            log.info("Customer found with findOne(1L):");
+            // fetch an individual audioTrackProgress by ID
+            AudioTrackProgress audioTrackProgress = repository.findOne(1L);
+            log.info("AudioTrackProgress found with findOne(1L):");
             log.info("--------------------------------");
-            log.info(customer.toString());
+            log.info(audioTrackProgress.toString());
             log.info("");
 
             // fetch customers by last name
-            log.info("Customer found with findByLastNameStartsWithIgnoreCase('Bauer'):");
+            log.info("AudioTrackProgress found with findByLastNameStartsWithIgnoreCase('Bauer'):");
             log.info("--------------------------------------------");
-            for (Customer bauer : repository
+            for (AudioTrackProgress bauer : repository
                     .findByLastNameStartsWithIgnoreCase("Bauer")) {
                 log.info(bauer.toString());
             }

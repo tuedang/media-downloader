@@ -23,7 +23,7 @@ public class MusicDownloadManager {
         return new MusicDownloadManager(downloadCallback);
     }
 
-    public void download(String url, String downloadDest) throws ExecutionException, InterruptedException, IOException {
+    public void download(String url, String downloadDest) {
         MusicDownloadBrokerHandler musicDownloadBrokerHandler = new MusicDownloadBrokerHandler(url, downloadDest, false, downloadCallback);
 
         //TODO: bad implementation, ask expert to improve this.
