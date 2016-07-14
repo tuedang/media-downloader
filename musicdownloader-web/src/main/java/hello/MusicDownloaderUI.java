@@ -18,7 +18,7 @@ import java.util.concurrent.CopyOnWriteArrayList;
 
 @SpringUI
 @Theme("valo")
-public class VaadinUI extends UI {
+public class MusicDownloaderUI extends UI {
 
     private final Grid grid;
 
@@ -30,7 +30,7 @@ public class VaadinUI extends UI {
 
     List<Status> statuses = new CopyOnWriteArrayList();
 
-    public VaadinUI() {
+    public MusicDownloaderUI() {
         this.grid = new Grid();
         this.downloadUrl = new TextField();
         this.downloadFolder = new TextField();
