@@ -2,7 +2,25 @@ package com.demo.music.downloader;
 
 public class Status {
     public enum StatusType {
-        START, PARSING, DOWNLOAD_IMAGE, DOWNLOAD_SOUNDTRACK, FINISH, ERROR
+        START("STARTING"),
+        PARSING,
+        DOWNLOAD_IMAGE,
+        DOWNLOAD_SOUNDTRACK,
+        FINISH,
+        ERROR;
+
+        private final String fieldDescription;
+        StatusType(String value) {
+            fieldDescription = value;
+        }
+        StatusType() {
+            fieldDescription = this.name();
+        }
+
+        @Override
+        public String toString() {
+            return fieldDescription;
+        }
     }
 
     private StatusType statusType;
