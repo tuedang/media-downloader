@@ -40,3 +40,13 @@ Beside that, all audio files will be tagged in following fields:
 - In order run as application (click and run): `mvn package -P app`
 - Build war file to run on tomcat or jetty: `mvn package -P web`
 
+# Demo
+Demo site:
+http://tdang.synology.me:7070/musicdownloader/
+
+Then see the result here, you can also download the album to your computer
+http://gofile.me/6r9Tw/n0svXJdrK
+
+Note: Don't hurt my cheap NAS :(
+
+Thanks
