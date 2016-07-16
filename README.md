@@ -1,5 +1,6 @@
 # media-downloader
 
+## Introduction
 Download audio album in multiple sites, until now 
 ![alt ui](docs/album-list.png)
 - one album includes:
@@ -32,7 +33,7 @@ Beside that, all audio files will be tagged in following fields:
     + Album
     + Artist
 
-# build
+## Build
 - System requirement:
     - java 8
     - maven
@@ -40,10 +41,10 @@ Beside that, all audio files will be tagged in following fields:
 - In order run as application (click and run): `mvn package -P app`
 - Build war file to run on tomcat or jetty: `mvn package -P web`
 
-# License
+## License
 MIT, I think. Feel free to use this source code.
 
-# Demo
+## Demo
 Demo site:
 http://tdang.synology.me:7070/musicdownloader/
 
