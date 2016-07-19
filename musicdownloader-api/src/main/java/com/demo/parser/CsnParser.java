@@ -47,15 +47,18 @@ public class CsnParser implements MusicParser {
         .thenApply((input) -> {
             try {
                 Document document = HtmlPageContent.fromURL(new URL(input), HtmlPageContent.ContentType.HTML).getJsoupDocument();
-                return document.select("#downloadlink a[href*='/320/']").attr("href");
+                String link320 = document.select("#downloadlink a[href*='/320/']").attr("href");
+                if(document.select("#downloadlink a span").text().contains("Lossless")) {
+                    return link320
+                            .replace("[MP3 320kbps]", "[FLAC Lossless]")
+                            .replace(".mp3", ".flac")
+                            .replace("/320/", "/flac/");
+                }
+                return link320;
             } catch (MalformedURLException e) {
                 return "ERROR:" + refLink;
             }
         })
-        .thenApply(transformedLink -> transformedLink
-                    .replace("[MP3 320kbps]", "[FLAC Lossless]")
-                    .replace(".mp3", ".flac")
-                    .replace("/320/", "/flac/"))
         .thenApply(input -> StringHtmlUtils.encodeParamUrl(input));
 
         try {
