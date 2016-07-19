@@ -72,7 +72,7 @@ public class MusicDownloaderUI extends UI {
             String dest = downloadFolder.getValue();
             AppProfiler.persistProfile(new MusicProfile(downloadUrl.getValue(), dest, false));
             statuses.clear();
-            setPollInterval(1000);
+            setPollInterval(3000);
             MusicDownloadManager musicDownloadManager = MusicDownloadManager.getInstance(status -> statuses.add(status.clone()));
             musicDownloadManager.download(downloadUrl.getValue(), dest);
         });
