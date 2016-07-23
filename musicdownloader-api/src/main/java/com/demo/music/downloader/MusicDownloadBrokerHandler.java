@@ -1,6 +1,6 @@
 package com.demo.music.downloader;
 
-import com.demo.music.downloader.httpdownloader.SimpleHttpDownloader;
+import com.demo.music.downloader.httpdownloader.WgetHttpDownloader;
 import com.demo.music.sdo.Album;
 import com.demo.parser.api.MusicParser;
 import com.demo.parser.api.PageParserRegistry;
@@ -19,7 +19,7 @@ public class MusicDownloadBrokerHandler {
     private DownloadCallback downloadCallback;
     private Status status = new Status();
     private PageParserRegistry pageParserRegistry = new PageParserRegistry();
-    private HttpDownloader httpDownloader = new SimpleHttpDownloader();
+    private HttpDownloader httpDownloader = new WgetHttpDownloader();
 
     public MusicDownloadBrokerHandler(String url, String dest, boolean discography, DownloadCallback downloadCallback) {
         this.url = url;
@@ -46,7 +46,7 @@ public class MusicDownloadBrokerHandler {
         }
 
         String destFolder = new File(dest, StringHtmlUtils.trimCommonFileName(album.getName())).getAbsolutePath();
-        AlbumDownloader albumDownloader = new AlbumDownloader(album, new TargetOutputStreamContext(destFolder), httpDownloader);
+        AlbumDownloader albumDownloader = new AlbumDownloader(album, new TargetOutputContext(destFolder), httpDownloader);
         albumDownloader.downloadAlbum(downloadCallback);
 
         return StatusType.FINISH.name();

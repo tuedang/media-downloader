@@ -10,10 +10,7 @@ import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.DefaultRedirectStrategy;
 import org.apache.http.impl.client.HttpClientBuilder;
 
-import java.io.BufferedInputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
+import java.io.*;
 import java.net.URI;
 
 public class SimpleHttpDownloader implements HttpDownloader {
@@ -43,5 +40,11 @@ public class SimpleHttpDownloader implements HttpDownloader {
             out.close();
         }
 
+    }
+
+    @Override
+    public void download(String url, File target) throws IOException {
+        OutputStream os = new FileOutputStream(target);
+        download(url, os);
     }
 }

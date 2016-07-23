@@ -18,7 +18,7 @@ public class CsnParserTest {
 
     @Test
     public void parseLink() throws IOException {
-        String url = "http://chiasenhac.com/nghe-album/the-portal-part-1~medwyn-goodall~1632548.html";
+        String url = "http://chiasenhac.vn/nghe-album/the-portal-part-1~medwyn-goodall~1632548.html";
 
         Album album = new CsnParser().getAlbum(new URL(url));
         assertEquals("Medwyn Goodall", album.getArtist());
@@ -31,7 +31,7 @@ public class CsnParserTest {
         //2
         assertThat(album.getTracks(), hasItems(hasProperty("title", equalTo("Orbit"))));
         assertThat(album.getTracks(), hasItems(hasProperty("creator", equalTo("Medwyn Goodall"))));
-        assertThat(album.getTracks(), hasItems(hasProperty("location", containsString("http://data.chiasenhac.com/downloads/1633/0/1632548-85848bc8"))));
+        assertThat(album.getTracks(), hasItems(hasProperty("location", containsString("http://data2.chiasenhac.com/downloads/1633/0/1632548-85848bc8"))));
 
     }
 
