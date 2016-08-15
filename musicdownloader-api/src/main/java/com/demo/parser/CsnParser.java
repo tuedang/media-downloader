@@ -5,6 +5,7 @@ import com.demo.music.sdo.Track;
 import com.demo.parser.api.MusicParser;
 import com.demo.parser.common.HtmlPageContent;
 import com.demo.parser.common.StringHtmlUtils;
+import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 
 import java.io.IOException;
@@ -36,7 +37,7 @@ public class CsnParser implements MusicParser {
                         decorateDownloadlink(e.select("span.gen>a").first().attr("href"))))
                 .collect(Collectors.toList());
 
-        String albumLink = htmlPageContent.getJsoupDocument().select("#fulllyric img").first().attr("src");
+        String albumLink = htmlPageContent.getJsoupDocument().select("img[src*='/cover/']").attr("src");
         String albumName = htmlPageContent.getJsoupDocument().select("span.maintitle").text();
         String artist = htmlPageContent.getJsoupDocument().select("#fulllyric [href*='mode=artist']").text();
         return new Album(albumName, url.toString(), artist, albumLink, tracks, "");
@@ -47,8 +48,11 @@ public class CsnParser implements MusicParser {
         .thenApply((input) -> {
             try {
                 Document document = HtmlPageContent.fromURL(new URL(input), HtmlPageContent.ContentType.HTML).getJsoupDocument();
-                String link320 = document.select("#downloadlink a[href*='/320/']").attr("href");
-                if(document.select("#downloadlink a span").text().contains("Lossless")) {
+                String rawParseContent = document.select("#downloadlink script:nth-child(2)").html();
+                Document jsoupJSContent = Jsoup.parse(rawParseContent);
+
+                String link320 = jsoupJSContent.select("a[href*='/320/']").attr("href");
+                if(jsoupJSContent.select("a span").text().contains("Lossless")) {
                     return link320
                             .replace("[MP3 320kbps]", "[FLAC Lossless]")
                             .replace(".mp3", ".flac")
