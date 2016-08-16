@@ -31,7 +31,8 @@ public class CsnParserTest {
         //2
         assertThat(album.getTracks(), hasItems(hasProperty("title", equalTo("Orbit"))));
         assertThat(album.getTracks(), hasItems(hasProperty("creator", equalTo("Medwyn Goodall"))));
-        assertThat(album.getTracks(), hasItems(hasProperty("location", containsString("http://data2.chiasenhac.com/downloads/1633/1/1632548-85848bc8"))));
+        assertThat(album.getTracks(), hasItems(hasProperty("location", containsString("http://data2.chiasenhac.com/downloads/1633/"))));
+        assertThat(album.getTracks(), hasItems(hasProperty("location", containsString("1632548-85848bc8"))));
 
     }
 
