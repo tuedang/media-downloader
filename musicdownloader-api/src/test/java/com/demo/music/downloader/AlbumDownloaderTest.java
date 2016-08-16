@@ -34,9 +34,9 @@ public class AlbumDownloaderTest {
         String url = "http://mp3.zing.vn/album/Tim-Lai-Bau-Troi-Tuan-Hung/ZWZ9E89F.html";
         Album album = new ZingParser().getAlbum(new URL(url));
 
-        AlbumDownloader albumDownloader = new AlbumDownloader(album, new TargetOutputContext("/Data/NCT/"+ StringHtmlUtils.trimCommonFileName(album.getName())), new SimpleHttpDownloader());
+        AlbumDownloader albumDownloader = new AlbumDownloader(album, new TargetOutputContext("/Data/NCT/"+ StringHtmlUtils.trimCommonFileName(album.getName())), new WgetHttpDownloader());
         albumDownloader.downloadAlbum((status) -> {
-            System.out.println(status.getStatusType());
+            System.out.println(status);
         });
     }
 

@@ -34,42 +34,34 @@ public class CsnParser implements MusicParser {
                 .map(e -> new Track(trackIdInteger.incrementAndGet(),
                         e.select(".musictitle").text(),
                         e.select("td span.gen").text().split("-")[1].trim(),
-                        decorateDownloadlink(e.select("span.gen>a").first().attr("href"))))
+                        e.select("span.gen>a").first().attr("href")))
+                .map(track -> {
+                    try {
+                        Document document = HtmlPageContent.fromURL(new URL(track.getLocation()), HtmlPageContent.ContentType.HTML).getJsoupDocument();
+                        String rawParseContent = document.select("#downloadlink script:nth-child(2)").html();
+                        Document jsoupJSContent = Jsoup.parse(rawParseContent);
+
+                        String link320 = jsoupJSContent.select("a[href*='/320/']").attr("href");
+                        if(jsoupJSContent.select("a span").text().contains("Lossless")) {
+                            String losslessLink = link320
+                                    .replace("[MP3 320kbps]", "[FLAC Lossless]")
+                                    .replace(".mp3", ".flac")
+                                    .replace("/320/", "/flac/");
+                            track.setLocation(losslessLink);
+                        } else {
+                            track.setLocation(link320);
+                        }
+                        return track;
+                    } catch (MalformedURLException e) {
+                        return track;
+                    }
+                })
                 .collect(Collectors.toList());
 
         String albumLink = htmlPageContent.getJsoupDocument().select("img[src*='/cover/']").attr("src");
         String albumName = htmlPageContent.getJsoupDocument().select("span.maintitle").text();
         String artist = htmlPageContent.getJsoupDocument().select("#fulllyric [href*='mode=artist']").text();
         return new Album(albumName, url.toString(), artist, albumLink, tracks, "");
-    }
-
-    private String decorateDownloadlink(String refLink) {
-        CompletableFuture<String> completableFuture = CompletableFuture.supplyAsync(() -> refLink)
-        .thenApply((input) -> {
-            try {
-                Document document = HtmlPageContent.fromURL(new URL(input), HtmlPageContent.ContentType.HTML).getJsoupDocument();
-                String rawParseContent = document.select("#downloadlink script:nth-child(2)").html();
-                Document jsoupJSContent = Jsoup.parse(rawParseContent);
-
-                String link320 = jsoupJSContent.select("a[href*='/320/']").attr("href");
-                if(jsoupJSContent.select("a span").text().contains("Lossless")) {
-                    return link320
-                            .replace("[MP3 320kbps]", "[FLAC Lossless]")
-                            .replace(".mp3", ".flac")
-                            .replace("/320/", "/flac/");
-                }
-                return link320;
-            } catch (MalformedURLException e) {
-                return "ERROR:" + refLink;
-            }
-        })
-        .thenApply(input -> StringHtmlUtils.encodeParamUrl(input));
-
-        try {
-            return completableFuture.get();
-        } catch (InterruptedException | ExecutionException e) {
-            return null;
-        }
     }
 
 }

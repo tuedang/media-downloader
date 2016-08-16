@@ -31,7 +31,7 @@ public class ZingParserTest {
         //0
         assertThat(album.getTracks(), hasItems(hasProperty("title", equalTo("Tìm Lại Bầu Trời"))));
         assertThat(album.getTracks(), hasItems(hasProperty("creator", equalTo("Tuấn Hưng"))));
-//        assertThat(album.getTracks(), hasItems(hasProperty("location", containsString("http://mp3.zing.vn/xml/load-song/"))));
+        assertThat(album.getTracks(), hasItems(hasProperty("location", containsString("http://s1.mp3.zdn.vn/"))));
 
         //9
         assertThat(album.getTracks(), hasItems(hasProperty("title", equalTo("Anh Sẽ Vui ... Nếu (Instrumental)"))));
