@@ -16,11 +16,9 @@ public class HtmlPageContent {
     public enum ContentType {
         HTML, XML, HTML_JS
     }
-    private String content;
     private Document document;
 
     public HtmlPageContent(String content, ContentType contentType) {
-        this.content = content;
         if (contentType != null && contentType == ContentType.XML) {
             this.document = Jsoup.parse(content, "", Parser.xmlParser());
         } else {
@@ -29,8 +27,8 @@ public class HtmlPageContent {
     }
 
     public static HtmlPageContent fromURL(URL url, ContentType contentType) {
-        String text;
         try {
+            String text;
             if ("file".equals(url.getProtocol())) {
                 text = IOUtils.toString(url, StandardCharsets.UTF_8);
             } else {
