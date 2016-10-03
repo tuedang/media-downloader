@@ -1,5 +1,6 @@
-package com.demo.parser.common;
+package com.demo.parser;
 
+import com.demo.parser.common.HtmlPageContent;
 import org.junit.BeforeClass;
 import org.junit.Test;
 

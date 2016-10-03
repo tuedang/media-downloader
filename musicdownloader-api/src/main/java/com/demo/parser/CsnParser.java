@@ -59,8 +59,8 @@ public class CsnParser implements MusicParser {
                 .collect(Collectors.toList());
 
         String albumLink = htmlPageContent.getJsoupDocument().select("img[src*='/cover/']").attr("src");
-        String albumName = htmlPageContent.getJsoupDocument().select("span.maintitle").text();
-        String artist = htmlPageContent.getJsoupDocument().select("#fulllyric [href*='mode=artist']").text();
+        String albumName = htmlPageContent.getJsoupDocument().select("#fulllyric .genmed a[href*='mode=album']").text();
+        String artist = htmlPageContent.getJsoupDocument().select("#fulllyric .genmed a[href*='mode=artist']").text();
         return new Album(albumName, url.toString(), artist, albumLink, tracks, "");
     }
 
