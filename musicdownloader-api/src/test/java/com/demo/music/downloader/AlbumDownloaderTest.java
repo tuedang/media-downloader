@@ -17,6 +17,15 @@ import com.demo.parser.NctParser;
 public class AlbumDownloaderTest {
 
     @Test
+    public void downloadAlbumCsn() throws IOException {
+        String url = "http://chiasenhac.vn/nghe-album/the-portal-part-1~medwyn-goodall~ts303dm7qnwm8t.html";
+        Album album = new CsnParser().getAlbum(new URL(url));
+
+        AlbumDownloader albumDownloader = new AlbumDownloader(album, new TargetOutputContext("/Data/NCT/"+ StringHtmlUtils.trimCommonFileName(album.getName())), new WgetHttpDownloader());
+        albumDownloader.downloadAlbum(status -> System.out.println(status.getStatusType()));
+    }
+
+    @Test
     public void downloadAlbumNCT() throws IllegalStateException, IOException {
         String url = "http://www.nhaccuatui.com/playlist/tuyen-tap-nhung-ca-khuc-rock-quoc-te-hay-adam-lambert.xQBpvCYhDpjq.html";
         Album album = new NctParser().getAlbum(new URL(url));
@@ -49,12 +58,4 @@ public class AlbumDownloaderTest {
         albumDownloader.downloadAlbum(status -> System.out.println(status.getStatusType()));
     }
 
-    @Test
-    public void downloadAlbumCsn() throws IOException {
-        String url = "http://chiasenhac.vn/nghe-album/invocation-part-3~medwyn-goodall~1382118.html";
-        Album album = new CsnParser().getAlbum(new URL(url));
-
-        AlbumDownloader albumDownloader = new AlbumDownloader(album, new TargetOutputContext("/Data/NCT/"+ StringHtmlUtils.trimCommonFileName(album.getName())), new WgetHttpDownloader());
-        albumDownloader.downloadAlbum(status -> System.out.println(status.getStatusType()));
-    }
 }

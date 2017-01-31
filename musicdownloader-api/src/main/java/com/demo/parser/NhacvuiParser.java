@@ -29,7 +29,7 @@ public class NhacvuiParser implements MusicParser {
                 .map(e -> new Track(trackIdInteger.incrementAndGet(),
                             e.select(".playListAlbum-item a.plst-baihat").text(),
                             e.select(".playListAlbum-item a.plst-casi").text(),
-                            "http://nhac.vui.vn" + e.select(".playListAlbum-item .listNhac-btn .link-download").attr("href")))
+                            "http://nhac.vui.vn" + e.select(".playListAlbum-item .listNhac-btn .link-download-song").attr("href")))
                 .collect(Collectors.toList());
 
         String albumLink = htmlPageContent.getJsoupDocument().select(".albumInfo-img img").attr("src");

@@ -45,9 +45,9 @@ public class AlbumParserTesting {
         assertEquals(40, album.getTracks().size());
 
         //0
-        assertThat(album.getTracks(), hasItems(hasProperty("title", equalTo("The Unforgiven II"))));
+        assertThat(album.getTracks(), hasItems(hasProperty("title", equalTo("The Unforgiven Ii"))));
         assertThat(album.getTracks(), hasItems(hasProperty("creator", equalTo("Metallica"))));
-        assertThat(album.getTracks(), hasItems(hasProperty("location", containsString("Unv_Audio13/TheUnforgivenIi-Metallica"))));
+        assertThat(album.getTracks(), hasItems(hasProperty("location", containsString("Unv_Audio57/TheUnforgivenIi-Metallica"))));
 
         //39
         assertThat(album.getTracks(), hasItems(hasProperty("title", equalTo("The Misery"))));
@@ -80,14 +80,14 @@ public class AlbumParserTesting {
         assertEquals("Tuấn Hưng", album.getArtist());
         assertEquals("Tìm Lại Bầu Trời", album.getName());
         assertEquals("", album.getPlaylistLink());
-        assertEquals("http://image.mp3.zdn.vn/thumb/165_165/covers/8/0/80839c0573a283bcf4a5fc9adaa7655b_1326512899.jpg", album.getImageLink());
+        assertEquals("http://zmp3-photo.d.za.zdn.vn/thumb/165_165/covers/f/1/f1bbd4f8e7b70635be3cc1d85b21f22d_1479365818.jpg", album.getImageLink());
 
         assertEquals(10, album.getTracks().size());
 
         //0
         assertThat(album.getTracks(), hasItems(hasProperty("title", equalTo("Tìm Lại Bầu Trời"))));
         assertThat(album.getTracks(), hasItems(hasProperty("creator", equalTo("Tuấn Hưng"))));
-        assertThat(album.getTracks(), hasItems(hasProperty("location", containsString("http://s1.mp3.zdn.vn/"))));
+        assertThat(album.getTracks(), hasItems(hasProperty("location", containsString("http://zmp3-mp3-s1.r.za.zdn.vn"))));
 
         //9
         assertThat(album.getTracks(), hasItems(hasProperty("title", equalTo("Anh Sẽ Vui ... Nếu (Instrumental)"))));
