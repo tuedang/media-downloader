@@ -8,8 +8,17 @@ import java.io.File;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.net.URL;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 public class WgetHttpDownloader implements HttpDownloader {
+
+    private static ExecutorService executorService;
+
+    public static WgetHttpDownloader getInstance(int poolsize) {
+        executorService = Executors.newFixedThreadPool(poolsize);
+        return new WgetHttpDownloader();
+    }
 
     @Override
     public void download(String url, OutputStream out) throws IOException {
@@ -18,8 +27,14 @@ public class WgetHttpDownloader implements HttpDownloader {
 
     @Override
     public void download(String url, File target) throws IOException {
-        DownloadInfo info = new DownloadInfo(new URL(url));
-        WGet w = new WGet(info, target);
-        w.download();
+        executorService.submit(() -> {
+            try {
+                DownloadInfo info = new DownloadInfo(new URL(url));
+                WGet w = new WGet(info, target);
+                w.download();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        });
     }
 }
